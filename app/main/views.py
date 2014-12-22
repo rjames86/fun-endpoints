@@ -1,6 +1,6 @@
-from . import main
+from . import route
 
 
-@main.route('/')
+@route('/')
 def index():
     return "Hello World."

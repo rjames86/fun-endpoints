@@ -1,13 +1,13 @@
 from flask import render_template, session, url_for, jsonify, request, abort
 import os
-from . import urls
+from . import route, urls
 
 
-@urls.route('/')
+@route('/')
 def index():
     return "Hello Urls."
 
-@urls.route('/long_url', methods=['GET'])
+@route('/long_url')
 def long_url():
     import urllib
     token = request.args.get('token', False)
