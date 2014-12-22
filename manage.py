@@ -3,7 +3,8 @@ import os
 from app import create_app
 from flask.ext.script import Manager, Shell
 
-app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+# app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+app = create_app('heroku')
 manager = Manager(app)
 
 

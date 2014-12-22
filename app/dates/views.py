@@ -1,5 +1,5 @@
-from . import dates
-from flask import request, jsonify
+from . import dates, errors
+from flask import request, jsonify, abort
 from dateutil.parser import parse
 from datetime import timedelta
 
@@ -20,7 +20,13 @@ def get_date(datestring):
         DATE_FORMAT = dt_format
 
     if delta:
-        delta = int(delta)
+        try:
+            delta = int(delta)
+        except ValueError:
+            return errors.make_error(
+                500,
+                "This doesn't look like an int. Try again..."
+            )
         new_dt = parse_dt + timedelta(days=delta)
         return new_dt.strftime(DATE_FORMAT)
 
