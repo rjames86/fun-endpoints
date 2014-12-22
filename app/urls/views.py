@@ -11,6 +11,8 @@ def index():
 def long_url():
     import urllib
     token = request.args.get('token', False)
+    print token
+    print request.args
     if not bool(token and token != os.environ.get('REQUEST_TOKEN')):
         abort(403)
     url = request.args.get('url', None)
