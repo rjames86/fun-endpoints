@@ -13,6 +13,9 @@ def long_url():
     token = request.args.get('token', False)
     print token
     print request.args
+    not bool(token and token != os.environ.get('REQUEST_TOKEN'))
+    print token != os.environ.get('REQUEST_TOKEN')
+    print os.environ
     if not bool(token and token != os.environ.get('REQUEST_TOKEN')):
         abort(403)
     url = request.args.get('url', None)
