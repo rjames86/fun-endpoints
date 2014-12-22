@@ -3,8 +3,6 @@ from flask import request, jsonify
 from dateutil.parser import parse
 from datetime import timedelta
 
-DATE_FORMAT = "%Y-%m-%d"
-
 
 @dates.route('/')
 def index():
@@ -13,10 +11,12 @@ def index():
 
 @dates.route('/getdate/<datestring>')
 def get_date(datestring):
+    DATE_FORMAT = "%Y-%m-%d"
+
     parse_dt = parse(datestring)
     delta = request.args.get('delta')
     dt_format = request.args.get('format')
-    if format:
+    if dt_format:
         DATE_FORMAT = dt_format
 
     if delta:
