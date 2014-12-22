@@ -6,10 +6,10 @@ from flask import request
 def index():
     return "Hello World."
 
-@main.route('/date')
+@main.route('/today')
 def get_date():
     import datetime
-    return  datetime.today().strftime("%Y-%m-%d")
+    return  datetime.datetime.today().strftime("%Y-%m-%d")
 
 @main.route('/tomorrow')
 def get_tomorrow():
