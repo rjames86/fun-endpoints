@@ -12,6 +12,8 @@ def create_app(config_name):
   bootstrap.init_app(app)
 
   from .main import main as main_blueprint
-  app.register_blueprint(main_blueprint, url_prefix='/testing')
+  from .urls import urls as url_blueprint
+  app.register_blueprint(main_blueprint, url_prefix='/')
+  app.register_blueprint(url_blueprint, url_prefix='/urls')
 
   return app
