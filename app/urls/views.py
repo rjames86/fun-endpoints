@@ -1,4 +1,8 @@
-from flask import render_template, session, url_for, jsonify, request, abort
+from flask import (
+    jsonify,
+    request,
+    abort
+)
 import os
 from . import urls
 
@@ -24,6 +28,7 @@ def long_url():
         short_url=url,
         long_url=resp.url
     )
+
 
 @urls.errorhandler(400)
 def custom400(error):
