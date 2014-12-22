@@ -23,7 +23,7 @@ def get_date(datestring):
         try:
             delta = int(delta)
         except ValueError:
-            return errors.make_error(
+            return utils.make_error(
                 500,
                 "This doesn't look like an int. Try again..."
             )

@@ -4,4 +4,4 @@ from ..lib.webutil import gen_route_decorator
 urls = Blueprint('urls', __name__)
 route = gen_route_decorator(urls)
 
-from . import views
+from . import views, errors
