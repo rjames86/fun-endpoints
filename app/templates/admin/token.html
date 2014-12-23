@@ -4,12 +4,6 @@
 {% block title %}Token adder{% endblock %}
 
 {% block page_content %}
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
-    </div>
-    {% endfor %}
     <div class="page-header">
         <h1>Hello, {{ current_user.username }} - {{current_user.token }}.</h1>
     </div>
