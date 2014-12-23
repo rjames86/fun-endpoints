@@ -12,4 +12,4 @@ def index():
 
 @main.route("/ip", methods=["GET"])
 def get_my_ip():
-    return jsonify({'ip': request.remote_addr}), 200
+    return str(request.remote_addr), 200
