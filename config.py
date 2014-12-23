@@ -46,7 +46,7 @@ class HerokuConfig(ProductionConfig):
         import logging
         from logging import StreamHandler
         file_handler = StreamHandler()
-        file_handler.setLevel(logging.Error)
+        file_handler.setLevel(logging.ERROR)
         app.logger.addHandler(file_handler)
 
 
