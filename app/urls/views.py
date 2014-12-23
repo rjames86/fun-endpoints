@@ -7,6 +7,8 @@ from . import urls, errors
 from ..lib import utils
 from ..lib.decorators import require_token
 from ..lib.yourls import client as yourls_client
+from BeautifulSoup import BeautifulSoup as Soup
+import urllib
 
 
 @urls.route('/')
@@ -16,7 +18,6 @@ def index():
 
 @urls.route('/long_url')
 def long_url():
-    import urllib
     token = request.args.get('token', False)
     if token != utils.get_var('REQUEST_TOKEN'):
         abort(403)
@@ -41,7 +42,18 @@ def yourls():
     to_shorten = request.args.get('url')
     if not to_shorten:
         return utils.make_error(400, "Missing url param")
-    c = yourls_client.YourlsClient(api_url, username=username, password=password)
-    to_ret = c.shorten(to_shorten)
+    c = yourls_client.YourlsClient(
+        api_url, username=username,
+        password=password
+    )
+    short_url = c.shorten(to_shorten)
 
-    return jsonify(url=to_ret)
+    open_site = urllib.urlopen(to_shorten)
+    soup = Soup(open_site)
+    title_search = soup.find('title')
+    title = title_search.text.strip() if title_search else ''
+
+    return jsonify(
+        url=short_url,
+        title=title
+    )
