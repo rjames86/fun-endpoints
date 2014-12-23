@@ -5,7 +5,7 @@ from flask import (
 )
 from . import urls, errors
 from ..lib import utils
-from ..lib.webutil import require_token
+from ..lib.decorators import require_token
 from ..lib.yourls import client as yourls_client
 
 

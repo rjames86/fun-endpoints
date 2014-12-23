@@ -1,5 +1,5 @@
 from . import dates, errors
-from ..lib.webutil import require_token
+from ..lib.decorators import require_token
 from ..lib.utils import make_error
 from flask import request, jsonify, abort
 from dateutil.parser import parse

@@ -1,5 +1,5 @@
 from flask import Blueprint
-from ..lib.webutil import gen_route_decorator
+from ..lib.decorators import gen_route_decorator
 
 urls = Blueprint('urls', __name__)
 route = gen_route_decorator(urls)
