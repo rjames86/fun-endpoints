@@ -23,7 +23,9 @@ def add_token():
         if user is not None:
             print "USER FOUND"
             print user.username
+            print user.token
             user.reset_token(form.token.data)
+            print user.token
             flash("Token updated for %s" % form.name.data)
         else:
             user = User(

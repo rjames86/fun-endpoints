@@ -26,11 +26,19 @@ class User(UserMixin, db.Model):
     def password(self, password):
         self.password_hash = generate_password_hash(password)
 
+    @property
+    def token(self):
+        return self.token
+
+    @token.setter
+    def token(self, value):
+        self.token = value
+
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-
     def reset_token(self, new_token):
+        print "setting token to", new_token
         self.token = new_token
         db.session.add(self)
         return True
