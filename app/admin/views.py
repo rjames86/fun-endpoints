@@ -1,6 +1,8 @@
 from flask import (
     render_template,
-    flash
+    flash,
+    redirect,
+    url_for
 )
 from . import admin
 from ..models import User
@@ -21,13 +23,16 @@ def add_token():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.name.data).first()
         if user is not None:
+            print 'if'
             print "USER FOUND"
-            print user.username
-            print user.token
+            print "username", user.username
+            print "token", user.token
             user.reset_token(form.token.data)
             print user.token
             flash("Token updated for %s" % form.name.data)
+            return redirect(url_for('admin.add_token'))
         else:
+            print 'else'
             user = User(
                 username=form.name.data,
                 token=form.token.data
