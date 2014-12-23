@@ -33,7 +33,7 @@ def long_url():
 
 
 @urls.route('/shorten')
-@require_token(restrict='ryan')
+@require_token(restrict='rjames')
 def yourls():
     username = utils.get_var('yourls_user')
     password = utils.get_var('yourls_pw')

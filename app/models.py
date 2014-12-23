@@ -29,10 +29,18 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    @staticmethod
+    def token_dict():
+        to_ret = {user.username: user.token for user in User.query.all()}
+        return to_ret
+
     def reset_token(self, new_token):
         self.token = new_token
         db.session.add(self)
         return True
+
+    def __init__(self, **kwargs):
+        super(User, self).__init__(**kwargs)
 
     def __repr__(self):
         return '<User %r>' % self.username

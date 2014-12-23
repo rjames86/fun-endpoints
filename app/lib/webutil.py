@@ -1,13 +1,10 @@
 from utils import configure_log, make_error
 from flask import request
 from functools import update_wrapper
+from ..models import User
 
 
 import logging
-
-all_tokens = {
-    'ryan': 'zyxwvut'
-}
 
 def add_context(f):
     def log():
@@ -44,6 +41,7 @@ def require_token(restrict=None):
 
     def outer(f):
         def inner(*args, **kw):
+            all_tokens = User.token_dict()
             token = request.args.get('token')
             if not token:
                 return make_error(403, "Acess forbidden")
