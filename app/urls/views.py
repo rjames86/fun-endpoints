@@ -7,7 +7,7 @@ from . import urls, errors
 from ..lib import utils
 from ..lib.decorators import require_token
 from ..lib.yourls import client as yourls_client
-from BeautifulSoup import BeautifulSoup as Soup
+from bs4 import BeautifulSoup as Soup
 import urllib
 
 
