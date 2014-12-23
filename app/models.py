@@ -30,10 +30,8 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def reset_token(self, new_token):
-        print "setting token to", new_token
         self.token = new_token
         db.session.add(self)
-        print self.token
         return True
 
     def __repr__(self):

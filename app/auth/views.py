@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, abort
 from flask.ext.login import logout_user, login_required, login_user
 from . import auth
 from ..models import User
@@ -29,6 +29,10 @@ def logout():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    users = User.query.all()
+    print len(users)
+    if len(users) >= 1:
+        return abort(403)
     if form.validate_on_submit():
         user = User(
             email=form.email.data,

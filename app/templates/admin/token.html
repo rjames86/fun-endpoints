@@ -5,7 +5,12 @@
 
 {% block page_content %}
     <div class="page-header">
-        <h1>Hello, {{ current_user.username }} - {{current_user.token }}.</h1>
+        <h1>Hello, {{ current_user.username }}.</h1>
+        <ul>
+        {% for user in users %}
+        <li>{{ user.username }} - {{ user.token }}</li>
+        {% endfor %}
+        </ul>
     </div>
     {{ wtf.quick_form(form) }}
 
