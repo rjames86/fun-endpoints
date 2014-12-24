@@ -7,7 +7,6 @@ from . import urls, errors
 from ..lib import utils
 from ..lib.decorators import require_token
 from ..lib.yourls import client as yourls_client
-from bs4 import BeautifulSoup as Soup
 import urllib
 
 
@@ -48,12 +47,11 @@ def yourls():
     )
     short_url = c.shorten(to_shorten)
 
-    open_site = urllib.urlopen(to_shorten)
-    soup = Soup(open_site)
-    title_search = soup.find('title')
-    title = title_search.text.strip() if title_search else ''
+    # open_site = urllib.urlopen(to_shorten)
+    # soup = Soup(open_site)
+    # title_search = soup.find('title')
+    # title = title_search.text.strip() if title_search else ''
 
     return jsonify(
-        url=short_url,
-        title=title
+        url=short_url
     )
