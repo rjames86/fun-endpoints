@@ -15,7 +15,7 @@
             {{ form.hidden_tag() }}
                 <div class="col-md-4">
                     {{ form.county_number.label }}
-                    {{ form.county_number(class='form-control') }}
+                    {{ form.county_number(class='form-control', pattern='[0-9]+') }}
                     {{ form.submit() }}
                 </div>
             </form>
