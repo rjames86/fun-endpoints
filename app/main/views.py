@@ -27,7 +27,5 @@ def mt_counties():
     if form.validate_on_submit():
         to_ret = counties[str(form.county_number.data)]
         session['results'] = to_ret
-        print session
-        print session['results']
         return redirect(url_for('main.mt_counties'))
     return render_template('main/counties.html', form=form, results=session.get('results'))
