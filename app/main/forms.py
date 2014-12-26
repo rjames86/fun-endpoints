@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms import IntegerField, SubmitField
-from wtforms.validators import Required, NumberRange
+from wtforms.validators import NumberRange
 
 
 class CountyForm(Form):

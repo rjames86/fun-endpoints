@@ -9,30 +9,26 @@
 {% block title %}Montana Counties{% endblock %}
 
 {% block page_content %}
-<div class="container">
 
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            {{ wtf.quick_form(form) }}
-        </div>
-        <div class="col-md-6 col-md-offset-3">
-            {% if results %}
-                <p>City: {{ results.city }} County:{{ results.county }}</p>
-            {% endif %}
-        </div>
-    </div>
-</div>
-<!-- <div class="container">
 
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <form method="POST" class="form-horizontal form", role="form">
-            {{ form.hidden_tag() }}
-                <div class="col-md-4">
+            <form method="POST" class="form" role="form">
+            <div class="form-group {% if form.errors %} has-error{% endif %}">
+                    {{ form.hidden_tag() }}
                     {{ form.county_number.label }}
-                    {{ form.county_number(class='form-control') }}
-                    {{ form.submit() }}
-                </div>
+                    {{ form.county_number(class='form-control', type="number", placeholder="Search county number...", pattern="\d*") }}
+                    {% if form.errors %}
+                        <ul class="errors">
+                        {% for field, errors in form.errors.items(): %}
+                        {% for error in errors %}
+                            <p class="help-block">{{ error }}</p>
+                        {% endfor %}
+                        {% endfor %}
+                        </ul>
+                      {% endif %}
+              </div>
+              {{ form.submit(class="btn btn-default") }}
             </form>
         </div>
         <div class="col-md-6 col-md-offset-3">
@@ -41,7 +37,6 @@
             {% endif %}
         </div>
     </div>
-</div>
- -->
+
 
 {% endblock %}
