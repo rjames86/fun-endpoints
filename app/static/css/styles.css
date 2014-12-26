@@ -1,3 +1,8 @@
+input[type='text'],
+input[type='number'],
+textarea {
+  font-size: 16px;
+}
 .center-div {
   margin: 0 auto;
   width: 80%;
