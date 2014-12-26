@@ -4,5 +4,5 @@ from wtforms.validators import Required, NumberRange
 
 
 class CountyForm(Form):
-    county_number = IntegerField('Country Code', [NumberRange(min=1, max=56, message="Counties are between 1 and 56")])
+    county_number = IntegerField('County Number', [NumberRange(min=1, max=56, message="Counties are between 1 and 56")])
     submit = SubmitField("Search")
