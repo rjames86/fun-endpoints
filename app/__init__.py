@@ -1,12 +1,10 @@
 from flask import Flask
 from flask.ext.bootstrap import Bootstrap
 from config import config
-from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from lib.webutils import ProxiedRequest
 
 bootstrap = Bootstrap()
-db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
