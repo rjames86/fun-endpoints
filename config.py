@@ -18,7 +18,7 @@ class Config:
 
     @staticmethod
     def init_app(app):
-        pass
+        print "config init"
 
 
 class DevelopmentConfig(Config):
@@ -44,8 +44,8 @@ class HerokuConfig(ProductionConfig):
     @classmethod
     def init_app(cls, app):
         # handle proxy server headers
-        # from werkzeug.contrib.fixers import ProxyFix
-        # app.wsgi_app = ProxyFix(app.wsgi_app)
+        from werkzeug.contrib.fixers import ProxyFix
+        app.wsgi_app = ProxyFix(app.wsgi_app)
 
         print "Using Heroku config"
         ProductionConfig.init_app(app)
