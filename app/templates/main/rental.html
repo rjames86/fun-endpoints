@@ -20,25 +20,28 @@
     {% endfor %}
     </thead>
     <tbody>
+        {% set total = '%.2f' % data.total %}
         {% for transaction in data.transactions %}
+            {% set amount = '%.2f' % transaction['Amount'] %}
+
             <tr>
-                <td>{{ transaction['Date'] }}</td>
+                <td>{{ transaction['Date'].strftime('%Y-%m-%d') }}</td>
                 <td></td>
                 <td>{{ transaction['Payee'] }}</td>
                 <td>{{ transaction['Memo'] }}</td>
                 <td>{{ transaction['Category'] }}</td>
                 <td></td>
-                <td>{{ transaction['Amount'] }}</td>
+                <td align="right"> {{ amount }}</td>
             </tr>
         {% endfor %}
-        <tr>
+        <tr class="info">
             <th scope="row">Total</th>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td>{{ data.total }}</td>
+            <td align="right">{{ total }}</td>
         </tr>
     </tbody>
 </table>

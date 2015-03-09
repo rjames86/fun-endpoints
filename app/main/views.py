@@ -6,6 +6,7 @@ from flask import (
     redirect,
     jsonify
 )
+from flask.ext.login import login_required
 from . import main
 from ..lib.mt_counties import mt_counties as counties
 from ..lib.parse_transaction import TransactionParser
