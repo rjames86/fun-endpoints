@@ -34,4 +34,8 @@ def create_app(config_name):
     app.register_blueprint(admin_bluepring, url_prefix='/admin')
     app.register_blueprint(auth_bluepring, url_prefix='/auth')
 
+    if not app.config['SSL_DISABLE']:
+        from flask.ext.sslify import SSLify
+        sslify = SSLify(app)
+
     return app
