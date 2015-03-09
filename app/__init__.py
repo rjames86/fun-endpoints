@@ -1,10 +1,12 @@
 from flask import Flask
 from flask.ext.bootstrap import Bootstrap
 from config import config
+from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from lib.webutils import ProxiedRequest
 
 bootstrap = Bootstrap()
+db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
@@ -16,6 +18,7 @@ def create_app(config_name):
     config[config_name].init_app(app)
     app.request_class = ProxiedRequest
 
+    db.init_app(app)
     bootstrap.init_app(app)
     login_manager.init_app(app)
 
