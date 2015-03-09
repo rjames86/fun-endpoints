@@ -16,6 +16,7 @@ def create_app(config_name):
     config[config_name].init_app(app)
     app.request_class = ProxiedRequest
 
+    db.init_app(app)
     bootstrap.init_app(app)
     login_manager.init_app(app)
 
