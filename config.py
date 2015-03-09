@@ -34,7 +34,7 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    DEBUG = True
+    DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 
@@ -46,7 +46,6 @@ class HerokuConfig(ProductionConfig):
         # handle proxy server headers
         from werkzeug.contrib.fixers import ProxyFix
         app.wsgi_app = ProxyFix(app.wsgi_app)
-
         print "Using Heroku config"
         ProductionConfig.init_app(app)
 
