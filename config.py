@@ -13,6 +13,8 @@ class Config:
     FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
     FLASKY_MAIL_SENDER = 'Flasky Admin <flasky@example.com>'
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
+    UPLOAD_FOLDER = "app/static/images/photos"
+    SSL_DISABLE = True
 
     @staticmethod
     def init_app(app):
@@ -37,8 +39,13 @@ class ProductionConfig(Config):
 
 
 class HerokuConfig(ProductionConfig):
+    SSL_DISABLE = bool(os.environ.get('SSL_DISABLE'))
+
     @classmethod
     def init_app(cls, app):
+        # handle proxy server headers
+        from werkzeug.contrib.fixers import ProxyFix
+        app.wsgi_app = ProxyFix(app.wsgi_app)
         print "Using Heroku config"
         ProductionConfig.init_app(app)
 
