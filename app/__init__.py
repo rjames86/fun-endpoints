@@ -27,12 +27,16 @@ def create_app(config_name):
     from .dates import dates as dates_blueprint
     from .admin import admin as admin_blueprint
     from .auth import auth as auth_blueprint
+    from .photos import photos as photos_blueprint
+    from .tp import tp as tp_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(url_blueprint, url_prefix='/urls')
     app.register_blueprint(dates_blueprint, url_prefix='/dates')
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
+    app.register_blueprint(photos_blueprint, url_prefix='/photos')
+    app.register_blueprint(tp_blueprint, url_prefix='/tp')
 
     if not app.debug and not app.testing and not app.config['SSL_DISABLE']:
         from flask.ext.sslify import SSLify
