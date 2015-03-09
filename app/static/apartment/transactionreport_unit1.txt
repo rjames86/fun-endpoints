@@ -1,0 +1,19 @@
+Monday, March 9, 2015
+		Transaction Detail Report
+		8/7/14 through 3/2/15
+
+							
+Date		Payee	Memo	Category		Amount	
+ÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑÑ	
+							
+Unit #1							
+							
+3/1/15		Gerry Heivilin	 Check #3090	Rent Paid		464.00	
+3/1/15		Monthly Rent	March	Rent		-650.00	
+3/1/15		Missoula Housing Authority	Check #88271	Rent Paid:Section 8		231.00	
+3/1/15		Tenant Utility Reimbursement		Utilities		-45.00	
+						ÑÑÑÑÑÑÑÑ	
+Total Unit #1						0.00	
+						========	
+
+

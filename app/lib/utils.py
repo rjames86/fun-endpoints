@@ -2,16 +2,13 @@ import logging
 import os
 from flask import jsonify
 
+APP_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+APP_STATIC = os.path.join(APP_ROOT, 'static')
+
 
 def configure_log(level=None, name=None, verbose=False):
     logger = logging.getLogger(name)
     logger.setLevel(level)
-
-    # file_handler = logging.FileHandler('%s.log' % name, 'a+', 'utf-8')
-    # file_handler.setLevel(logging.DEBUG)
-    # file_format = logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d in %(funcName)s]')
-    # file_handler.setFormatter(file_format)
-    # logger.addHandler(file_handler)
 
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.INFO)

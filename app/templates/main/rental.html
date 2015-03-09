@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block head %}
+{{ super() }}
+<script src="{{ url_for('static', filename='javascript/jquery.min.js') }}"></script>
+
+<script type="text/javascript">console.log({{data.transactions}})</script>
+{% endblock %}
+
+{% block title %}Rental{% endblock %}
+
+{% block page_content %}
+
+
+<table class="table table-hover">
+    <thead>
+    {% for header in data.headers %}
+    <th>{{ header }}</th>
+    {% endfor %}
+    </thead>
+    <tbody>
+        {% for transaction in data.transactions %}
+            <tr>
+                <td>{{ transaction['Date'] }}</td>
+                <td></td>
+                <td>{{ transaction['Payee'] }}</td>
+                <td>{{ transaction['Memo'] }}</td>
+                <td>{{ transaction['Category'] }}</td>
+                <td></td>
+                <td>{{ transaction['Amount'] }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <th scope="row">Total</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ data.total }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+Monday, March 9, 2015
+		Transaction Detail Report
+		8/7/14 through 3/2/15
+
+							
+Date		Payee	Memo	Category		Amount	
+ÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑÑ	
+							
+Unit #3							
+							
+3/2/15		March Rent		Rent		-625.00	
+3/2/15		Scott Unrein	MO #10555038480	Rent Paid		158.00	
+						ÑÑÑÑÑÑÑÑ	
+Total Unit #3						-467.00	
+						========	
+
+

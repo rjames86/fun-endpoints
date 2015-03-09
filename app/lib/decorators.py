@@ -3,9 +3,7 @@ from flask import request
 from functools import update_wrapper
 from ..models import User
 
-
 import logging
-
 
 def add_context(f):
     def log():

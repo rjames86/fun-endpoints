@@ -1,0 +1,19 @@
+Monday, March 9, 2015
+		Transaction Detail Report
+		8/7/14 through 3/2/15
+
+							
+Date		Payee	Memo	Category		Amount	
+ÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑÑ	
+							
+Unit #4							
+							
+3/1/15		Security Deposit		Rent Paid:Security Deposit		-695.00	
+3/1/15		Mike Wagner   Check #4071	Check #4071	split		1,195.00	
+3/1/15		Tenant Utility Reimbursement		Utilities		-45.00	
+3/1/15		Monthly Rent		Rent		-650.00	
+						ÑÑÑÑÑÑÑÑ	
+Total Unit #4						-195.00	
+						========	
+
+
