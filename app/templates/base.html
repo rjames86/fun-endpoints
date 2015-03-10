@@ -22,9 +22,8 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>Home</li>
                 {% if current_user.is_authenticated() %}
-                <li>Hi {{ current_user.username }}</li>
+                <li>Hi {% if current_user.name %}{{ current_user.name }}{% else %}{{ current_user.username }}{% endif %}</li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -34,7 +33,7 @@
                         Account <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-
+                        <li><a href="{{ url_for('apartment.edit_profile') }}">Edit Profile</a></li>
                         <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
                     </ul>
                 </li>

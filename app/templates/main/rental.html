@@ -4,13 +4,19 @@
 {% block head %}
 {{ super() }}
 <script src="{{ url_for('static', filename='javascript/jquery.min.js') }}"></script>
-
-<script type="text/javascript">console.log({{data.transactions}})</script>
 {% endblock %}
 
 {% block title %}Rental{% endblock %}
 
 {% block page_content %}
+
+{% if current_user.is_administrator() %}
+<ul>
+    {% for apartment in ApartmentUnits.query.all() %}
+    <li><a href="{{ url_for('.rental_admin', apartment=apartment.unit_number) }}">{{ apartment.unit_number }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
 
 
 <table class="table table-hover">

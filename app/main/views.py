@@ -6,24 +6,14 @@ from flask import (
     redirect,
     jsonify
 )
-from flask.ext.login import login_required
 from . import main
 from ..lib.mt_counties import mt_counties as counties
-from ..lib.parse_transaction import TransactionParser
 from forms import CountyForm
 
 
 @main.route('/')
 def index():
     return "Hello World."
-
-
-@main.route('/rental/<apartment>', methods=['GET'])
-def rental(apartment):
-    transactions = TransactionParser.parse('apartment/transactionreport_unit{}.txt'.format(apartment))
-    return render_template(
-        'main/rental.html',
-        data=transactions)
 
 
 @main.route("/ip", methods=["GET"])
