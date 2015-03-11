@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, current_app
 from flask.ext.login import login_user, logout_user, login_required, \
     current_user
 from . import auth
@@ -55,9 +55,10 @@ def register():
         db.session.add(user)
         db.session.commit()
         token = user.generate_confirmation_token()
-        print "TOKEN", token
         send_email(user.email, 'Confirm Your Account',
                    'auth/email/confirm', user=user, token=token)
+        send_email(current_app.config['FLASKY_ADMIN'], 'New Registered User',
+                   'auth/email/new_user', user=user)
         flash('A confirmation email has been sent to you by email.')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)

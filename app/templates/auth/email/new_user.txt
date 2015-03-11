@@ -1,0 +1,4 @@
+The user {{ user.username }} has been created
+
+{{ url_for('apartment.user', username=user.username, _external=True) }}
+
