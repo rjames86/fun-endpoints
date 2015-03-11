@@ -46,6 +46,7 @@ def edit_profile_admin(id):
         flash('The profile has been updated.')
         return redirect(url_for('.user', username=user.username))
     form.email.data = user.email
+    form.name.data = user.name
     form.username.data = user.username
     form.confirmed.data = user.confirmed
     form.role.data = user.role_id
