@@ -13,7 +13,7 @@ from forms import CountyForm
 
 @main.route('/')
 def index():
-    return "Hello World."
+    return render_template('index.html')
 
 
 @main.route("/ip", methods=["GET"])

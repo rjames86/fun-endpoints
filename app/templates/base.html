@@ -22,9 +22,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                {% if current_user.is_authenticated() %}
-                <li>Hi {% if current_user.name %}{{ current_user.name }}{% else %}{{ current_user.username }}{% endif %}</li>
-                {% endif %}
+                <li class="active"><a href="{{ url_for('apartment.rental') }}">Apartment</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated() %}
@@ -34,11 +32,16 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ url_for('apartment.edit_profile') }}">Edit Profile</a></li>
+                        <li><a href="{{ url_for('auth.change_password') }}">Change Password</a></li>
+                        <li><a href="{{ url_for('auth.change_email_request') }}">Change Email</a></li>
                         <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
                     </ul>
                 </li>
+                {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
                 {% endif %}
             </ul>
+
         </div>
     </div>
 </div>

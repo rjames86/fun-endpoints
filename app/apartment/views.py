@@ -57,7 +57,7 @@ def edit_profile_admin(id):
 @login_required
 def rental():
     if not current_user.apartment_unit:
-        return "No Apartment has been assigned to you."
+        return render_template('main/rental.html')
     transactions = TransactionParser.parse(
         'apartment/transactionreport_unit{}.txt'.format(current_user.apartment_unit.unit_number))
     return render_template(
