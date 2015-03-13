@@ -68,7 +68,7 @@ def rental():
 
 @apartment.route('/rental/<int:apartment>', methods=['GET'])
 @login_required
-@admin_required
+@permission_required(Permission.VIEWALL)
 def rental_admin(apartment):
     apartment_unit = ApartmentUnits.query.filter_by(unit_number=apartment).first()
     transactions = TransactionParser.parse(

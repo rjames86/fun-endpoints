@@ -14,6 +14,7 @@ def load_user(user_id):
 
 class Permission:
     VIEW = 0x01
+    VIEWALL = 0x02
     ADMINISTER = 0x80
 
 
@@ -29,6 +30,8 @@ class Role(db.Model):
     def insert_roles():
         roles = {
             'User': (Permission.VIEW, True),
+            'AdvancedUser': (Permission.VIEW |
+                             Permission.VIEWALL, False),
             'Admin': (0xff, False)
         }
         for r in roles:
