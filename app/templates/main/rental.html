@@ -10,7 +10,7 @@
 
 {% block page_content %}
 
-{% if current_user.is_administrator() %}
+{% if current_user.can(Permission.VIEWALL) %}
 <ul>
     {% for apartment in ApartmentUnits.query.all() %}
     <li><a href="{{ url_for('.rental_admin', apartment=apartment.unit_number) }}">{{ apartment.unit_number }}</a></li>
