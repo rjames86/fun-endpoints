@@ -82,16 +82,8 @@ class User(UserMixin, db.Model):
     confirmed = db.Column(db.Boolean, default=False)
 
     def __init__(self, **kwargs):
-        print kwargs
         super(User, self).__init__(**kwargs)
-        print "FIRST ROLE", self.role
-        print "FIRSTEMAIL", self.email
-        print "FIRST FLASKY_ADMIN", current_app.config['FLASKY_ADMIN']
-        print "FIRST ROLE", Role.query.filter_by(permissions=0xff).first()
         if self.role is None:
-            print "EMAIL", self.email
-            print "FLASKY_ADMIN", current_app.config['FLASKY_ADMIN']
-            print Role.query.filter_by(permissions=0xff).first()
             if self.email == current_app.config['FLASKY_ADMIN']:
                 self.role = Role.query.filter_by(permissions=0xff).first()
             if self.role is None:
