@@ -49,7 +49,7 @@ Unit #2
 3/1/15		Monthly Rent		Rent		-650.00	
 3/1/15		Devanie R. Pierson	Check # 107	Rent Paid		400.00	
 3/1/15		Tenant Utility Reimbursement		Tenant Utilities		-45.00	
-3/19/15		Devanie R. Oierson	Check # 109	Rent Paid		350.00	
+3/19/15		Devanie R. Pierson	Check # 109	Rent Paid		350.00	
 						ÑÑÑÑÑÑÑ	
 Total Unit #2						370.00	
 						=======	
