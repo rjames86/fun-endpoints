@@ -1,10 +1,10 @@
-Monday, March 9, 2015
+Thursday, March 19, 2015
 		Transaction Detail Report
-		8/7/14 through 3/2/15
+		8/7/14 through 3/19/15
 
 							
 Date		Payee	Memo	Category		Amount	
-ÑÑÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑÑ	
+ÑÑÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑ	
 							
 Unit #2							
 							
@@ -15,18 +15,18 @@ Unit #2
 8/17/14		Security Deposit		Rent Paid:Security Deposit		-695.00	
 8/18/14		Monthly Rent	August - Partial	Rent		-293.55	
 8/18/14		Cody Bautista	August Rent	Rent Paid:Security Deposit		695.00	
-8/18/14		Cody Bautista	Partial	Utilities		-20.32	
+8/18/14		Cody Bautista	Partial	Tenant Utilities		-20.32	
 8/18/14		Cody Bautista		Rent Paid		650.00	
 9/1/14		Monthly Rent		Rent		-650.00	
-9/1/14		Tenant Utility Reimbursement		Utilities		-45.00	
+9/1/14		Tenant Utility Reimbursement		Tenant Utilities		-45.00	
 9/3/14		Cody Bautista		Rent Paid		450.00	
 9/15/14		Cody Bautista		Rent Paid		300.00	
 9/19/14		Cody Bautista		Rent Paid		305.00	
 10/1/14		Monthly Rent		Rent		-650.00	
-10/1/14		Tenant Utility Reimbursement		Utilities		-45.00	
+10/1/14		Tenant Utility Reimbursement		Tenant Utilities		-45.00	
 10/1/14		Cody Bautista		Rent Paid		650.00	
 11/1/14		Monthly Rent		Rent		-650.00	
-11/1/14		Tenant Utility Reimbursement		Utilities		-45.00	
+11/1/14		Tenant Utility Reimbursement		Tenant Utilities		-45.00	
 11/5/14		Devanie R. Pierson	ACH Payment	Fees:NSF		43.87	
 11/10/14		Devanie R. Pierson	NSF reversal	Fees:NSF		-43.87	
 11/10/14		Returned Payment Fee		Fees:NSF		-30.00	
@@ -34,23 +34,24 @@ Unit #2
 11/24/14		Cody Bautista		Rent Paid		655.00	
 11/24/14		Cody Bautista		Rent Paid		45.00	
 12/1/14		Monthly Rent		Rent		-650.00	
-12/1/14		Tenant Utility Reimbursement		Utilities		-45.00	
+12/1/14		Tenant Utility Reimbursement		Tenant Utilities		-45.00	
 12/22/14		Cody Bautista		Rent Paid		650.00	
 12/22/14		Cody Bautista		Rent Paid		50.00	
 1/1/15		Monthly Rent		Rent		-650.00	
-1/1/15		Tenant Utility Reimbursement		Utilities		-45.00	
+1/1/15		Tenant Utility Reimbursement		Tenant Utilities		-45.00	
 1/2/15		Cody Bautista		Rent Paid		45.00	
 1/2/15		Cody Bautista		Rent Paid		655.00	
 2/1/15		Monthly Rent		Rent		-650.00	
-2/1/15		Tenant Utility Reimbursement		Utilities		-45.00	
+2/1/15		Tenant Utility Reimbursement		Tenant Utilities		-45.00	
 2/5/15		Cody Bautista		Rent Paid		300.00	
 2/10/15		Door Replacement		Repairs		-279.00	
 2/13/15		Cody Bautista		Miscellaneous		279.00	
 3/1/15		Monthly Rent		Rent		-650.00	
 3/1/15		Devanie R. Pierson	Check # 107	Rent Paid		400.00	
-3/1/15		Tenant Utility Reimbursement		Utilities		-45.00	
-						ÑÑÑÑÑÑÑÑ	
-Total Unit #2						20.00	
-						========	
+3/1/15		Tenant Utility Reimbursement		Tenant Utilities		-45.00	
+3/19/15		Devanie R. Oierson	Check # 109	Rent Paid		350.00	
+						ÑÑÑÑÑÑÑ	
+Total Unit #2						370.00	
+						=======	
 
 
