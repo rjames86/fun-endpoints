@@ -1,6 +1,7 @@
 from utils import APP_STATIC
 import os
 from datetime import datetime
+from operator import itemgetter
 
 """ Parses a file that looks like this, delimited by tabs
 
@@ -39,6 +40,7 @@ class TransactionParser(object):
         # the last line is the total
         transactions = map(lambda t: dict(zip(headers, t)), trans_file[2:-1])
         transactions = TransactionParser.cleanup(transactions)
+        transactions = sorted(transactions, key=itemgetter('Date'), reverse=False)
 
         return dict(
             headers=headers,
