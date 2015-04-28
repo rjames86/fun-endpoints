@@ -1,10 +1,10 @@
-Saturday, March 28, 2015
+Monday, April 27, 2015
 		Transaction Detail Report
-		8/7/14 through 3/28/15
+		7/6/11 through 4/27/15
 
 							
 Date		Payee	Memo	Category		Amount	
-ÑÑÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑ	
+ÑÑÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑÑ	ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ		ÑÑÑÑÑÑÑÑ	
 							
 Unit #2							
 							
@@ -51,8 +51,12 @@ Unit #2
 3/1/15		Tenant Utility Reimbursement		Tenant Utilities		-45.00	
 3/19/15		Devanie R. Pierson	Check # 109	Rent Paid		350.00	
 3/28/15		Devanie R. Pierson	Check # 110	Rent Paid		350.00	
-						ÑÑÑÑÑÑÑ	
-Total Unit #2						720.00	
-						=======	
+4/1/15		Monthly Rent		Rent		-650.00	
+4/1/15		Tenant Utility Reimbursement		Tenant Utilities		-45.00	
+4/15/15		Cody Bautista	Check # 113	Rent Paid		500.00	
+4/27/15		Devanie R. Pierson	Check # 112	Rent Paid		500.00	
+						ÑÑÑÑÑÑÑÑ	
+Total Unit #2						1,025.00	
+						========	
 
 
