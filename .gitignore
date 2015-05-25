@@ -31,5 +31,6 @@ var/
 *.manifest
 *.spec
 data-dev.sqlite
-**/static/apartment/*
 config.codekit
+**/static/apartment/*
+venv
