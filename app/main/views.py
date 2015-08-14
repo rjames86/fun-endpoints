@@ -30,3 +30,8 @@ def mt_counties():
         session['results'] = to_ret
         return redirect(url_for('main.mt_counties'))
     return render_template('main/counties.html', form=form, results=session.get('results'))
+
+
+@main.route("/pbp")
+def pbp():
+    return render_template('main/pbp.html')
