@@ -85,22 +85,22 @@ PbpRiderTable = React.createClass
 
   componentDidMount: ->
     $.ajax({
-          url: 'http://suivi.paris-brest-paris.org/data/' + @props.fram + '.txt',
-          success: (strData) =>
-            temps = strdata.split(';')
-            # aff_resultat(temps)
-            if @isMounted
-              @setState data: temps
-          error: =>
-            if @isMounted
-              @setState data: []
-            return
-          type: "GET",
-          async: false,
-          cache: true,
-          crossDomain: true,
-          dataType: 'jsonp'
-      })
+      url: 'http://suivi.paris-brest-paris.org/data/' + @props.fram + '.txt',
+      success: (strData) =>
+        temps = strdata.split(';')
+        # aff_resultat(temps)
+        if @isMounted
+          @setState data: temps
+      error: =>
+        if @isMounted
+          @setState data: []
+        return
+      type: "GET",
+      async: false,
+      cache: true,
+      crossDomain: true,
+      dataType: 'jsonp'
+    })
 
   conv_min: (temps) ->
     t = temps.split(':')
@@ -173,8 +173,8 @@ Accordian = React.createClass
     previousClick: null
 
   onClick: ->
-    $("[class~=collapse]").collapse("hide");
-    $("#collapse-#{@props.entry.Fram}").collapse('toggle');
+    $("[class~=collapse]").collapse("hide")
+    $("#collapse-#{@props.entry.Fram}").collapse('toggle')
     @setState loadRequested: true
 
   makeHeader: ->
@@ -211,33 +211,9 @@ LoadRiders = React.createClass
       if @isMounted
         @setState riders: readData $("#data")
 
-  loadPbpInfo: (fram) ->
-    if @state[fram]
-      return
-    $.ajax({
-          url: 'http://suivi.paris-brest-paris.org/data/' + fram + '.txt',
-          success: (strData) =>
-            temps = strdata.split(';')
-            # aff_resultat(temps)
-            newState = @state
-            newState[fram] = temps
-            @setState  newState
-            return
-          error: =>
-            newState = @state
-            newState[fram] = "No results"
-            @setState newState
-            return
-          type: "GET",
-          async: false,
-          cache: true,
-          crossDomain: true,
-          dataType: 'jsonp'
-      })
-
   render: ->
     d.div {className: "panel-group", id:"accordian"},
-      @state.riders.map (entry) => Accordian entry: entry
+      @state.riders.map (entry) -> Accordian entry: entry
 
 
 $ ->

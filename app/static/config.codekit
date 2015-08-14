@@ -131,7 +131,7 @@
 			"flagValue": 3
 			},
 		"no_backticks": {
-			"active": 1,
+			"active": 0,
 			"flagValue": -1
 			},
 		"no_debugger": {
@@ -147,7 +147,7 @@
 			"flagValue": -1
 			},
 		"no_implicit_braces": {
-			"active": 1,
+			"active": 0,
 			"flagValue": -1
 			},
 		"no_implicit_parens": {

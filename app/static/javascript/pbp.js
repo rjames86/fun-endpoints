@@ -246,47 +246,15 @@
         };
       })(this));
     },
-    loadPbpInfo: function(fram) {
-      if (this.state[fram]) {
-        return;
-      }
-      return $.ajax({
-        url: 'http://suivi.paris-brest-paris.org/data/' + fram + '.txt',
-        success: (function(_this) {
-          return function(strData) {
-            var newState, temps;
-            temps = strdata.split(';');
-            newState = _this.state;
-            newState[fram] = temps;
-            _this.setState(newState);
-          };
-        })(this),
-        error: (function(_this) {
-          return function() {
-            var newState;
-            newState = _this.state;
-            newState[fram] = "No results";
-            _this.setState(newState);
-          };
-        })(this),
-        type: "GET",
-        async: false,
-        cache: true,
-        crossDomain: true,
-        dataType: 'jsonp'
-      });
-    },
     render: function() {
       return d.div({
         className: "panel-group",
         id: "accordian"
-      }, this.state.riders.map((function(_this) {
-        return function(entry) {
-          return Accordian({
-            entry: entry
-          });
-        };
-      })(this)));
+      }, this.state.riders.map(function(entry) {
+        return Accordian({
+          entry: entry
+        });
+      }));
     }
   });
 
