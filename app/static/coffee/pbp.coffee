@@ -268,6 +268,7 @@ LoadRiders = React.createClass
       d.div {className: "col-md-6"},
         d.input {
           placeholder: "Search rider name..."
+          className: "form-control"
           onChange: (e) =>
             @setState filterBy: e.target.value
         }, ""
