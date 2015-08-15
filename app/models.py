@@ -206,7 +206,8 @@ class Rider(object):
 
     VALID_NAMES = [
         "craig robertson",
-        "paul vlasveld"
+        "paul vlasveld",
+        "james allison"
     ]
 
     def __init__(self, headers, row_item):
