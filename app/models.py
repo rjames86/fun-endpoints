@@ -209,8 +209,7 @@ class Rider(object):
         "paul vlasveld",
         "james allison",
         "greg kline",
-        "stacey kline",
-
+        "stacy kline",
     ]
 
     def __init__(self, headers, row_item):
