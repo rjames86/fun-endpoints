@@ -1,5 +1,5 @@
 from utils import configure_log, make_error
-from flask import request
+from flask import request, jsonify
 from functools import update_wrapper
 from ..models import User
 
@@ -21,6 +21,18 @@ def add_context(f):
     return inner
 
 
+def as_json_context(f):
+    def format_output(ret):
+        data = []
+        for item in ret:
+            data.append(item._asdict())
+        return jsonify(data=data)
+
+    def inner(*args, **kwargs):
+        return format_output(f(*args, **kwargs))
+    return inner
+
+
 def gen_route_decorator(mod):
     class route(object):
         def __init__(self, path):
@@ -29,6 +41,18 @@ def gen_route_decorator(mod):
         def __call__(self, f):
             # Flask has a lookup table with function name, so we need to pass it through
             f_with_context_and_json = add_context(f)
+            f_with_context_and_json.__name__ = f.__name__
+            return mod.route(self.path, methods=['POST', 'GET'])(f_with_context_and_json)
+    return route
+
+def json_route_decorator(mod):
+    class route(object):
+        def __init__(self, path):
+            self.path = path
+
+        def __call__(self, f):
+            # Flask has a lookup table with function name, so we need to pass it through
+            f_with_context_and_json = as_json_context(f)
             f_with_context_and_json.__name__ = f.__name__
             return mod.route(self.path, methods=['POST', 'GET'])(f_with_context_and_json)
     return route

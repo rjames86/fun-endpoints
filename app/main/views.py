@@ -4,10 +4,12 @@ from flask import (
     session,
     url_for,
     redirect,
-    jsonify
+    current_app,
 )
-from . import main
+from . import main, as_json
 from ..lib.mt_counties import mt_counties as counties
+from ..models import Riders
+from ..email import send_email
 from forms import CountyForm
 
 
@@ -35,3 +37,31 @@ def mt_counties():
 @main.route("/pbp")
 def pbp():
     return render_template('main/pbp.html')
+
+
+@as_json("/pbp_riders")
+def local_pbp_riders():
+    return Riders.get_local_riders()
+
+
+@as_json("/pbp_riders/all")
+def all_pbp_riders():
+    return Riders.get_all_riders()
+
+
+@main.route("/pbp_rider_request", methods=["POST"])
+def pbp_rider_request():
+    print request
+    print request.args
+    print request.args.get('name')
+    print request.args.get('email')
+    print request.args.get('rider_name')
+    send_email(
+        current_app.config['FLASKY_ADMIN'],
+        'New Rider Request',
+        'main/email/pbp_rider_request',
+        name=request.args.get('name'),
+        email=request.args.get('email'),
+        rider_name=request.args.get('rider_name')
+    )
+    return

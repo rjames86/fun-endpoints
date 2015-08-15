@@ -151,7 +151,6 @@ PbpRiderTable = React.createClass
         d.td {}, @aff_date
 
   render: ->
-    console.log "data", @state.data
     if @state.data == null
       d.p {}, "loading..."
     else if @state.data.length
@@ -174,7 +173,7 @@ Accordian = React.createClass
 
   onClick: ->
     $("[class~=collapse]").collapse("hide")
-    $("#collapse-#{@props.entry.Fram}").collapse('toggle')
+    $("#collapse-#{@props.entry.fram}").collapse('toggle')
     @setState loadRequested: true
 
   makeHeader: ->
@@ -182,39 +181,101 @@ Accordian = React.createClass
       d.a {
         "data-toggle": "collapse",
         "data-parent": "#accordian",
-        # href: "#collapse-#{@props.entry.Fram}"
+        # href: "#collapse-#{@props.entry.fram}"
         onClick: => @onClick()
-      }, "#{@props.entry.First} #{@props.entry.Last}"
+      }, "#{@props.entry.first} #{@props.entry.last}"
 
   render: ->
     d.div {className: "panel panel-default"},
       d.div {className: "panel-heading"},
         @makeHeader()
-      d.div {id:"collapse-#{@props.entry.Fram}", className: "panel-collapse collapse"},
+      d.div {id:"collapse-#{@props.entry.fram}", className: "panel-collapse collapse"},
         d.div {className: "panel-body"},
           d.div {className: "well"},
-            d.p {}, "Start: #{@props.entry.Wave}"
-            d.p {}, "Group: #{@props.entry['Club Name']}"
+            d.p {}, "Wave: #{@props.entry.wave}"
+            d.p {}, "Start: #{@props.entry.start} hour"
+            d.p {}, "Group: #{@props.entry['club_name']}"
           if @state.loadRequested
-            PbpRiderTable fram: @props.entry.Fram
+            PbpRiderTable fram: @props.entry.fram
           else
             d.div {}, ""
 
 LoadRiders = React.createClass
   getInitialState: ->
-    dataUrl: "https://spreadsheets.google.com/feeds/cells/1FAWvqlEmbUbMJgbUJndCFiU_3PSFi4kVSoa6iFtJd0A/1/public/values?alt=json-in-script&callback=doData",
+    # dataUrl: "https://spreadsheets.google.com/feeds/cells/1FAWvqlEmbUbMJgbUJndCFiU_3PSFi4kVSoa6iFtJd0A/1/public/values?alt=json-in-script&callback=doData",
+    dataUrl: "/pbp_riders",
     riders: []
     loadingText: "Grabbing info"
+    filterBy: ""
+    name: ""
+    email: ""
+    rider_info: ""
 
   componentDidMount: ->
-    $.get @state.dataUrl, =>
+    $.get @state.dataUrl, (data) =>
       if @isMounted
-        @setState riders: readData $("#data")
+        @setState riders: data.data #readData $("#data")
+
+  filterByName: ->
+    _.filter(
+      @state.riders,
+      (entry) =>
+        entry.full_name.toLowerCase().indexOf(@state.filterBy.toLowerCase()) > -1
+    )
+
+  handleEmailSubmit: (event) ->
+    event.preventDefault()
+    $.ajax({
+      url: '/pbp_rider_request'
+      data:
+        name: @state.name
+        email: @state.email
+        rider_name: @state.rider_name
+      success: ->
+        console.log "winner"
+      error: =>
+        console.log "it failed"
+      type: "POST",
+    })
 
   render: ->
-    d.div {className: "panel-group", id:"accordian"},
-      @state.riders.map (entry) -> Accordian entry: entry
-
+    window.riders = @state.riders
+    d.div {className: "row"},
+      d.div {},
+        d.div {className: "col-md-3"},
+          d.div {className: "well"},
+            d.p {}, "Hi there! Please email me at rjames86@gmail.com if you have any feedback or want to add a rider."
+            d.p {}, "Thanks!"
+            d.p {}, "-Ryan"
+          # d.form {},
+          #   d.input {
+          #     placeholder:"name",
+          #     name:"name",
+          #     onChange: (e) =>
+          #       @setState name: e.target.value
+          #   }, ""
+          #   d.input {
+          #     placeholder:"email",
+          #     name:"email",
+          #     onChange: (e) => @setState email: e.target.value
+          #   }, ""
+          #   d.input {
+          #     placeholder:"rider",
+          #     name:"rider_name",
+          #     onChange: (e) => @setState rider_name: e.target.value
+          #   }, ""
+          #   d.button {onClick: @handleEmailSubmit}, "Send"
+      d.div {className: "col-md-6"},
+        d.input {
+          placeholder: "Search rider name..."
+          onChange: (e) =>
+            @setState filterBy: e.target.value
+        }, ""
+        d.div {className: "panel-group", id:"accordian"},
+          if @state.filterBy.length
+            @filterByName().map (entry) -> Accordian entry: entry
+          else
+            @state.riders.map (entry) -> Accordian entry: entry
 
 $ ->
   React.render LoadRiders({}), document.getElementById('react')

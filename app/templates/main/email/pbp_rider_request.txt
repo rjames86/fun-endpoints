@@ -1,0 +1,4 @@
+The user {{ name }} ({{ email }}) has requested a new rider.
+
+{{ rider_name }}
+
