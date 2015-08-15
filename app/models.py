@@ -204,7 +204,10 @@ class Rider(object):
         'CA-Santa Cruz Randonneurs'
     ]
 
-    VALID_NAMES = ["craig robertson"]
+    VALID_NAMES = [
+        "craig robertson",
+        "paul vlasveld"
+    ]
 
     def __init__(self, headers, row_item):
         self.rider = dict(zip(headers, [row.text for row in row_item.findAll('td')]))
