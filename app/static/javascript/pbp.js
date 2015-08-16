@@ -19,7 +19,7 @@
   spData = null;
 
   root.doData = function(json) {
-    spData = json.feed.entry;
+    spData = json.feeReact.DOM.entry;
   };
 
   ({
@@ -27,7 +27,7 @@
       var tdd;
       tdd = $('<td/>');
       tr.append(td);
-      td.append(val);
+      tReact.DOM.append(val);
       return td;
     }
   });
@@ -215,38 +215,38 @@
     },
     makeRow: function(location) {
       var rows;
-      rows = [d.td({}, location), d.td({}, this.aff_km(this.state.data)), d.td({}, this.aff_heure(this.state.data))];
+      rows = [React.DOM.td({}, location), React.DOM.td({}, this.aff_km(this.state.data)), React.DOM.td({}, this.aff_heure(this.state.data))];
       if (location === 'FINISH') {
         if (this.state.data[17] === '' || this.state.data[17] === 'OK') {
-          rows.push(d.td({}, this.aff_date(this.state.data)));
+          rows.push(React.DOM.td({}, this.aff_date(this.state.data)));
         } else if (this.state.data[17] === 'AB') {
-          rows.push(d.td({}, "Abandon"));
+          rows.push(React.DOM.td({}, "Abandon"));
         } else if (this.state.data[17] === 'NP') {
-          rows.push(d.td({}, "Non Partant"));
+          rows.push(React.DOM.td({}, "Non Partant"));
         }
       } else {
-        rows = rows.concat([d.td({}, this.aff_date(this.state.data), d.td({}, this.aff_moy(this.state.data), d.td({}, this.aff_moytot(this.state.data))))]);
+        rows = rows.concat([React.DOM.td({}, this.aff_date(this.state.data), React.DOM.td({}, this.aff_moy(this.state.data), React.DOM.td({}, this.aff_moytot(this.state.data))))]);
       }
-      return d.tr({}, rows);
+      return React.DOM.tr({}, rows);
     },
     render: function() {
       var extra, t, t1, t2, table, to_ret;
       to_ret = [];
       if (this.state.data === null) {
-        return d.p({}, "loading...");
+        return React.DOM.p({}, "loading...");
       } else if (this.state.data.length) {
         start = this.conv_min(this.state.data[0]);
-        table = d.table({
+        table = React.DOM.table({
           border: 1
-        }, d.tr({}, d.td({
+        }, React.DOM.tr({}, React.DOM.td({
           width: '100'
-        }, "Contrôle"), d.td({
+        }, "Contrôle"), React.DOM.td({
           width: '100'
-        }, "KM"), d.td({
+        }, "KM"), React.DOM.td({
           width: '100'
-        }, "Temps"), d.td({
+        }, "Temps"), React.DOM.td({
           width: '150'
-        }, "Passage"), d.td({}, "Moyenne tronçon"), d.td({}, "Moyenne Totale")), this.state.checkPoints.map((function(_this) {
+        }, "Passage"), React.DOM.td({}, "Moyenne tronçon"), React.DOM.td({}, "Moyenne Totale")), this.state.checkPoints.map((function(_this) {
           return function(location) {
             return _this.makeRow(location);
           };
@@ -266,13 +266,13 @@
             t1 = t2;
             t2 = t;
           }
-          extra = d.p({}, "Heure estimée d'arrivée au prochain contrôle entre " + (this.aff_date_min(t1)) + " et " + (this.aff_date_min(t2)));
+          extra = React.DOM.p({}, "Heure estimée d'arrivée au prochain contrôle entre " + (this.aff_date_min(t1)) + " et " + (this.aff_date_min(t2)));
           to_ret.push(extra);
         }
         i = 0;
         return table;
       } else {
-        return d.p({}, "no results :(");
+        return React.DOM.p({}, "no results :(");
       }
     }
   });
@@ -292,9 +292,9 @@
       });
     },
     makeHeader: function() {
-      return d.h4({
+      return React.DOM.h4({
         className: "panel-title"
-      }, d.a({
+      }, React.DOM.a({
         "data-toggle": "collapse",
         "data-parent": "#accordian",
         onClick: (function(_this) {
@@ -305,20 +305,21 @@
       }, this.props.entry.first + " " + this.props.entry.last));
     },
     render: function() {
-      return d.div({
-        className: "panel panel-default"
-      }, d.div({
+      return React.DOM.div({
+        className: "panel panel-default",
+        key: this.props.entry.fram
+      }, React.DOM.div({
         className: "panel-heading"
-      }, this.makeHeader()), d.div({
+      }, this.makeHeader()), React.DOM.div({
         id: "collapse-" + this.props.entry.fram,
         className: "panel-collapse collapse"
-      }, d.div({
+      }, React.DOM.div({
         className: "panel-body"
-      }, d.div({
+      }, React.DOM.div({
         className: "well"
-      }, d.p({}, "Wave: " + this.props.entry.wave), d.p({}, "Start: " + this.props.entry.start + " hour"), d.p({}, "Group: " + this.props.entry['club_name'])), this.state.loadRequested ? PbpRiderTable({
+      }, React.DOM.p({}, "Wave: " + this.props.entry.wave), React.DOM.p({}, "Start: " + this.props.entry.start + " hour"), React.DOM.p({}, "Group: " + this.props.entry['club_name'])), this.state.loadRequested ? PbpRiderTable({
         fram: this.props.entry.fram
-      }) : d.div({}, ""))));
+      }) : React.DOM.div({}, ""))));
     }
   });
 
@@ -357,10 +358,10 @@
       uniqClubs = _.unique(_.map(riders, function(rider) {
         return rider.club_name;
       }));
-      return d.select({
+      return React.DOM.select({
         className: "form-control"
       }, _.map(uniqClubs, function(club) {
-        return d.option({
+        return React.DOM.option({
           value: club
         }, club);
       }));
@@ -384,36 +385,36 @@
       });
     },
     navBar: function() {
-      return d.nav({
+      return React.DOM.nav({
         className: "navbar navbar-default"
-      }, d.div({
+      }, React.DOM.div({
         className: "container-fluid"
-      }, d.div({
+      }, React.DOM.div({
         className: "navbar-header"
-      }, d.p({
+      }, React.DOM.p({
         className: "navbar-brand"
-      }, "PBP")), d.div({
+      }, "PBP")), React.DOM.div({
         className: "collapse navbar-collapse",
         id: "pbp-navbar"
-      }, d.ul({
+      }, React.DOM.ul({
         className: "nav navbar-nav"
-      }, d.li({}, d.a({
+      }, React.DOM.li({}, React.DOM.a({
         href: "#"
       }, "Link")), this.getDropdowns()))));
     },
     render: function() {
       window.riders = this.state.riders;
-      return d.div({
+      return React.DOM.div({
         className: "col-md-12"
-      }, d.div({
+      }, React.DOM.div({
         className: "row"
-      }, d.div({}, d.div({
+      }, React.DOM.div({}, React.DOM.div({
         className: "col-md-3"
-      }, d.div({
+      }, React.DOM.div({
         className: "well"
-      }, d.p({}, "Hi there! Please email me at rjames86@gmail.com if you have any feedback or want to add a rider."), d.p({}, "Thanks!"), d.p({}, "-Ryan")))), d.div({
+      }, React.DOM.p({}, "Hi there! Please email me at rjames86@gmail.com if you have any feedback or want to add a rider."), React.DOM.p({}, "Thanks!"), React.DOM.p({}, "-Ryan")))), React.DOM.div({
         className: "col-md-6"
-      }, d.div({
+      }, React.DOM.div({
         className: "panel-group",
         id: "accordian"
       }, this.state.filterBy.length ? this.filterByName().map(function(entry) {

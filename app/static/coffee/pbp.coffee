@@ -10,13 +10,13 @@ root = exports ? this
 spData = null
 
 root.doData = (json) ->
-  spData = json.feed.entry
+  spData = json.feeReact.DOM.entry
   return
 
 drawCell: (tr, val) ->
   tdd = $('<td/>')
   tr.append td
-  td.append val
+  tReact.DOM.append val
   td
 
 drawRow = (table, rowData) ->
@@ -194,24 +194,24 @@ PbpRiderTable = React.createClass
 
   makeRow: (location) ->
     rows = [
-      d.td {}, location
-      d.td {}, @aff_km @state.data
-      d.td {}, @aff_heure @state.data
+      React.DOM.td {}, location
+      React.DOM.td {}, @aff_km @state.data
+      React.DOM.td {}, @aff_heure @state.data
     ]
     if location == 'FINISH'
       if @state.data[17] == '' or @state.data[17] == 'OK'
-        rows.push (d.td {}, @aff_date(@state.data))
+        rows.push (React.DOM.td {}, @aff_date(@state.data))
       else if @state.data[17] == 'AB'
-        rows.push (d.td {}, "Abandon")
+        rows.push (React.DOM.td {}, "Abandon")
       else if @state.data[17] == 'NP'
-        rows.push (d.td {}, "Non Partant")
+        rows.push (React.DOM.td {}, "Non Partant")
     else
       rows = rows.concat [
-        d.td {}, @aff_date(@state.data),
-        d.td {}, @aff_moy(@state.data),
-        d.td {}, @aff_moytot(@state.data),
+        React.DOM.td {}, @aff_date(@state.data),
+        React.DOM.td {}, @aff_moy(@state.data),
+        React.DOM.td {}, @aff_moytot(@state.data),
     ]
-    d.tr {},
+    React.DOM.tr {},
       rows
 
 
@@ -221,17 +221,17 @@ PbpRiderTable = React.createClass
   render: ->
     to_ret = []
     if @state.data == null
-      d.p {}, "loading..."
+      React.DOM.p {}, "loading..."
     else if @state.data.length
       start = @conv_min(@state.data[0])
-      table = (d.table {border: 1},
-        d.tr {},
-          d.td {width: '100'}, "Contrôle"
-          d.td {width: '100'}, "KM"
-          d.td {width: '100'}, "Temps"
-          d.td {width: '150'}, "Passage"
-          d.td {}, "Moyenne tronçon"
-          d.td {}, "Moyenne Totale"
+      table = (React.DOM.table {border: 1},
+        React.DOM.tr {},
+          React.DOM.td {width: '100'}, "Contrôle"
+          React.DOM.td {width: '100'}, "KM"
+          React.DOM.td {width: '100'}, "Temps"
+          React.DOM.td {width: '150'}, "Passage"
+          React.DOM.td {}, "Moyenne tronçon"
+          React.DOM.td {}, "Moyenne Totale"
         @state.checkPoints.map (location) => @makeRow location)
       to_ret.push table
       if next == 0
@@ -246,12 +246,12 @@ PbpRiderTable = React.createClass
           t = t1
           t1 = t2
           t2 = t
-        extra = d.p {}, "Heure estimée d'arrivée au prochain contrôle entre #{@aff_date_min(t1)} et #{@aff_date_min(t2)}"
+        extra = React.DOM.p {}, "Heure estimée d'arrivée au prochain contrôle entre #{@aff_date_min(t1)} et #{@aff_date_min(t2)}"
         to_ret.push extra
       i = 0
       return table
     else
-      d.p {}, "no results :("
+      React.DOM.p {}, "no results :("
 
 Accordian = React.createClass
   getInitialState: ->
@@ -264,8 +264,8 @@ Accordian = React.createClass
     @setState loadRequested: true
 
   makeHeader: ->
-    d.h4 {className: "panel-title"},
-      d.a {
+    React.DOM.h4 {className: "panel-title"},
+      React.DOM.a {
         "data-toggle": "collapse",
         "data-parent": "#accordian",
         # href: "#collapse-#{@props.entry.fram}"
@@ -273,19 +273,19 @@ Accordian = React.createClass
       }, "#{@props.entry.first} #{@props.entry.last}"
 
   render: ->
-    d.div {className: "panel panel-default"},
-      d.div {className: "panel-heading"},
+    React.DOM.div {className: "panel panel-default", key: @props.entry.fram},
+      React.DOM.div {className: "panel-heading"},
         @makeHeader()
-      d.div {id:"collapse-#{@props.entry.fram}", className: "panel-collapse collapse"},
-        d.div {className: "panel-body"},
-          d.div {className: "well"},
-            d.p {}, "Wave: #{@props.entry.wave}"
-            d.p {}, "Start: #{@props.entry.start} hour"
-            d.p {}, "Group: #{@props.entry['club_name']}"
+      React.DOM.div {id:"collapse-#{@props.entry.fram}", className: "panel-collapse collapse"},
+        React.DOM.div {className: "panel-body"},
+          React.DOM.div {className: "well"},
+            React.DOM.p {}, "Wave: #{@props.entry.wave}"
+            React.DOM.p {}, "Start: #{@props.entry.start} hour"
+            React.DOM.p {}, "Group: #{@props.entry['club_name']}"
           if @state.loadRequested
             PbpRiderTable fram: @props.entry.fram
           else
-            d.div {}, ""
+            React.DOM.div {}, ""
 
 LoadRiders = React.createClass
   getInitialState: ->
@@ -312,12 +312,12 @@ LoadRiders = React.createClass
 
   getDropdowns: ->
     uniqClubs = _.unique _.map riders, (rider) -> return rider.club_name
-    # d.li {className: "dropdown"},
-    #   d.a {className: "dropdown-toggle", "data-toggle": "dropdown", role: "button"}, "Clubs", d.span {className: "caret"}, ""
-    #   d.ul {className: "dropdown-menu"},
-    #     _.map uniqClubs, (club) -> d.li {}, d.a {href: "#"}, club
-    d.select {className: "form-control"},
-      _.map uniqClubs, (club) -> d.option {value: club}, club
+    # React.DOM.li {className: "dropdown"},
+    #   React.DOM.a {className: "dropdown-toggle", "data-toggle": "dropdown", role: "button"}, "Clubs", React.DOM.span {className: "caret"}, ""
+    #   React.DOM.ul {className: "dropdown-menu"},
+    #     _.map uniqClubs, (club) -> React.DOM.li {}, React.DOM.a {href: "#"}, club
+    React.DOM.select {className: "form-control"},
+      _.map uniqClubs, (club) -> React.DOM.option {value: club}, club
 
   handleEmailSubmit: (event) ->
     event.preventDefault()
@@ -335,53 +335,53 @@ LoadRiders = React.createClass
     })
 
   navBar: ->
-    d.nav {className: "navbar navbar-default"},
-      d.div {className: "container-fluid"},
-        d.div {className: "navbar-header"},
-          d.p {className: "navbar-brand"}, "PBP"
-        d.div {className: "collapse navbar-collapse", id: "pbp-navbar"},
-          d.ul {className: "nav navbar-nav"},
-            d.li {}, d.a {href: "#"}, "Link"
+    React.DOM.nav {className: "navbar navbar-default"},
+      React.DOM.div {className: "container-fluid"},
+        React.DOM.div {className: "navbar-header"},
+          React.DOM.p {className: "navbar-brand"}, "PBP"
+        React.DOM.div {className: "collapse navbar-collapse", id: "pbp-navbar"},
+          React.DOM.ul {className: "nav navbar-nav"},
+            React.DOM.li {}, React.DOM.a {href: "#"}, "Link"
             @getDropdowns()
 
   render: ->
     window.riders = @state.riders
-    d.div {className: "col-md-12"},
-    #   d.div {className: "row"},
+    React.DOM.div {className: "col-md-12"},
+    #   React.DOM.div {className: "row"},
     #     @navBar()
-      d.div {className: "row"},
-        d.div {},
-          d.div {className: "col-md-3"},
-            d.div {className: "well"},
-              d.p {}, "Hi there! Please email me at rjames86@gmail.com if you have any feedback or want to add a rider."
-              d.p {}, "Thanks!"
-              d.p {}, "-Ryan"
-            # d.form {},
-            #   d.input {
+      React.DOM.div {className: "row"},
+        React.DOM.div {},
+          React.DOM.div {className: "col-md-3"},
+            React.DOM.div {className: "well"},
+              React.DOM.p {}, "Hi there! Please email me at rjames86@gmail.com if you have any feedback or want to add a rider."
+              React.DOM.p {}, "Thanks!"
+              React.DOM.p {}, "-Ryan"
+            # React.DOM.form {},
+            #   React.DOM.input {
             #     placeholder:"name",
             #     name:"name",
             #     onChange: (e) =>
             #       @setState name: e.target.value
             #   }, ""
-            #   d.input {
+            #   React.DOM.input {
             #     placeholder:"email",
             #     name:"email",
             #     onChange: (e) => @setState email: e.target.value
             #   }, ""
-            #   d.input {
+            #   React.DOM.input {
             #     placeholder:"rider",
             #     name:"rider_name",
             #     onChange: (e) => @setState rider_name: e.target.value
             #   }, ""
-            #   d.button {onClick: @handleEmailSubmit}, "Send"
-        d.div {className: "col-md-6"},
-          # d.input {
+            #   React.DOM.button {onClick: @handleEmailSubmit}, "Send"
+        React.DOM.div {className: "col-md-6"},
+          # React.DOM.input {
           #   placeholder: "Search rider name..."
           #   className: "form-control"
           #   onChange: (e) =>
           #     @setState filterBy: e.target.value
           # }, ""
-          d.div {className: "panel-group", id:"accordian"},
+          React.DOM.div {className: "panel-group", id:"accordian"},
             if @state.filterBy.length
               @filterByName().map (entry) -> Accordian entry: entry
             else
