@@ -9,6 +9,7 @@ from flask.ext.login import UserMixin, AnonymousUserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app, request, url_for
 from . import db, login_manager
+import requests
 
 
 def clean_keys(key):
@@ -260,3 +261,25 @@ class Riders(list):
         rows = table.findAll('tr')
         headers = [row.text for row in rows.pop(0).findAll('th')]
         return headers, rows
+
+
+class RiderStatus(object):
+    def __init__(self, fram, resp, message):
+        self.fram = fram
+        self.message = message
+        self.resp = resp
+
+    def _asdict(self):
+        return dict(
+            message=self.message,
+            resp=self.resp,
+            fram=self.fram,
+        )
+
+    @classmethod
+    def get_by_fram(cls, fram):
+        resp = requests.get('http://suivi.paris-brest-paris.org/data/' + fram + '.txt')
+        if resp.status_code == 404:
+            return cls(fram, None, "Nothing found")
+        if resp.status_code == 200:
+            return cls(fram, resp.text, "Success")

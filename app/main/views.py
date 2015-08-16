@@ -5,10 +5,11 @@ from flask import (
     url_for,
     redirect,
     current_app,
+    jsonify,
 )
 from . import main, as_json
 from ..lib.mt_counties import mt_counties as counties
-from ..models import Riders
+from ..models import Riders, RiderStatus
 from ..email import send_email
 from forms import CountyForm
 
@@ -51,11 +52,6 @@ def all_pbp_riders():
 
 @main.route("/pbp_rider_request", methods=["POST"])
 def pbp_rider_request():
-    print request
-    print request.args
-    print request.args.get('name')
-    print request.args.get('email')
-    print request.args.get('rider_name')
     send_email(
         current_app.config['FLASKY_ADMIN'],
         'New Rider Request',
@@ -65,3 +61,8 @@ def pbp_rider_request():
         rider_name=request.args.get('rider_name')
     )
     return
+
+
+@main.route("/pbp_rider_status")
+def get_rider_status():
+    return jsonify(RiderStatus.get_by_fram(request.args.get("fram"))._asdict())
