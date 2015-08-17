@@ -16,6 +16,10 @@ def clean_keys(key):
     return key.replace(' ', '_').lower()
 
 
+def lower(rider_list):
+    return [rider.lower() for rider in rider_list]
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -205,13 +209,14 @@ class Rider(object):
         'CA-Santa Cruz Randonneurs'
     ]
 
-    VALID_NAMES = [
+    VALID_NAMES = lower([
         "craig robertson",
         "paul vlasveld",
         "james allison",
         "greg kline",
         "stacy kline",
-    ]
+        "Randy Shen"
+    ])
 
     def __init__(self, headers, row_item):
         self.rider = dict(zip(headers, [row.text for row in row_item.findAll('td')]))
