@@ -416,11 +416,11 @@
       }, React.DOM.div({
         className: "row"
       }, React.DOM.div({}, React.DOM.div({
-        className: "col-md-3"
+        className: "col-md-3 col-xs-12 col-s-12"
       }, React.DOM.div({
         className: "well"
       }, React.DOM.p({}, "Hi there! Please email me at rjames86@gmail.com if you have any feedback or want to add a rider."), React.DOM.p({}, "Thanks!"), React.DOM.p({}, "-Ryan")))), React.DOM.div({
-        className: "col-md-6"
+        className: "col-md-6 col-xs-12 col-s-12"
       }, React.DOM.div({
         className: "panel-group",
         id: "accordian"

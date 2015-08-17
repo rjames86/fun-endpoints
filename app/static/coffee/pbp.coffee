@@ -354,7 +354,7 @@ LoadRiders = React.createClass
     #     @navBar()
       React.DOM.div {className: "row"},
         React.DOM.div {},
-          React.DOM.div {className: "col-md-3"},
+          React.DOM.div {className: "col-md-3 col-xs-12 col-s-12"},
             React.DOM.div {className: "well"},
               React.DOM.p {}, "Hi there! Please email me at rjames86@gmail.com if you have any feedback or want to add a rider."
               React.DOM.p {}, "Thanks!"
@@ -377,7 +377,7 @@ LoadRiders = React.createClass
             #     onChange: (e) => @setState rider_name: e.target.value
             #   }, ""
             #   React.DOM.button {onClick: @handleEmailSubmit}, "Send"
-        React.DOM.div {className: "col-md-6"},
+        React.DOM.div {className: "col-md-6 col-xs-12 col-s-12"},
           # React.DOM.input {
           #   placeholder: "Search rider name..."
           #   className: "form-control"
