@@ -8,10 +8,13 @@ from flask import (
     jsonify,
 )
 from . import main, as_json
+from flask.ext.login import login_user, logout_user, login_required, \
+    current_user
 from ..lib.mt_counties import mt_counties as counties
-from ..models import Riders, RiderStatus
+from .. import db
+from ..models import Riders, RiderStatus, ValidRider
 from ..email import send_email
-from forms import CountyForm
+from forms import CountyForm, AddRider
 
 
 @main.route('/')
@@ -66,3 +69,26 @@ def pbp_rider_request():
 @main.route("/pbp_rider_status")
 def get_rider_status():
     return jsonify(RiderStatus.get_by_fram(request.args.get("fram"))._asdict())
+
+
+@main.route("/pbp/add_rider", methods=["GET", "POST"])
+@login_required
+def add_pbp_rider():
+    form = AddRider()
+    if form.validate_on_submit():
+        if ValidRider.query.filter_by(name=form.name.data).all():
+            session['results'] = form.name.data + ' has already been added'
+        else:
+            new_rider = ValidRider(name=form.name.data.lower())
+            session['results'] = form.name.data
+            db.session.add(new_rider)
+            db.session.commit()
+    return render_template('main/pbp_add_rider.html', form=form, results=session.get('results'))
+
+
+@main.route("/pbp/added_riders", methods=["GET"])
+def show_added_pbp_riders():
+    riders = ValidRider.query.all()
+    return "<br>".join(sorted([rider.name for rider in riders]))
+
+

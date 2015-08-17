@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os
 from app import create_app, db
-from app.models import User, Role, ApartmentUnits
+from app.models import User, Role, ApartmentUnits, ValidRider
 from flask.ext.script import Manager, Shell
 from flask.ext.migrate import Migrate, MigrateCommand
 
@@ -40,6 +40,8 @@ def deploy():
     # create apartment units
     ApartmentUnits.insert_apartments()
 
+    # add the already requested PBP riders
+    ValidRider.insert_riders()
 
 if __name__ == '__main__':
     manager.run()

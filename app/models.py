@@ -209,15 +209,6 @@ class Rider(object):
         'CA-Santa Cruz Randonneurs'
     ]
 
-    VALID_NAMES = lower([
-        "craig robertson",
-        "paul vlasveld",
-        "james allison",
-        "greg kline",
-        "stacy kline",
-        "Randy Shen"
-    ])
-
     def __init__(self, headers, row_item):
         self.rider = dict(zip(headers, [row.text for row in row_item.findAll('td')]))
 
@@ -240,7 +231,8 @@ class Rider(object):
         return False
 
     def is_valid_name(self):
-        return self.full_name.lower() in Rider.VALID_NAMES
+        # return self.full_name.lower() in Rider.VALID_NAMES
+        return self.full_name.lower() in [i[0] for i in ValidRider.query.with_entities(ValidRider.name).all()]
 
 
 class Riders(list):
@@ -288,3 +280,29 @@ class RiderStatus(object):
             return cls(fram, None, "Nothing found")
         if resp.status_code == 200:
             return cls(fram, resp.text, "Success")
+
+
+class ValidRider(db.Model):
+    __tablename__ = 'valid_riders'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+
+    VALID_NAMES = lower([
+        "craig robertson",
+        "paul vlasveld",
+        "james allison",
+        "greg kline",
+        "stacy kline",
+    ])
+
+    def __repr__(self):
+        return '<Rider %r>' % self.name
+
+    @staticmethod
+    def insert_riders():
+        for rider in ValidRider.VALID_NAMES:
+            rider = ValidRider(name=rider)
+            db.session.add(rider)
+        db.session.commit()
+
+
