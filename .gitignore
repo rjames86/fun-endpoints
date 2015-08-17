@@ -34,5 +34,5 @@ data-dev.sqlite
 config.codekit
 **/static/apartment/*
 venv
-config.codekit
+*config.codekit
 

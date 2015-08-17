@@ -1,4 +1,6 @@
 d = React.DOM
+React.initializeTouchEvents(true)
+
 i= 0
 start = undefined
 m1 = undefined
@@ -270,6 +272,7 @@ Accordian = React.createClass
         "data-parent": "#accordian",
         # href: "#collapse-#{@props.entry.fram}"
         onClick: => @onClick()
+        onTouchEnd: => @onClick()
       }, "#{@props.entry.first} #{@props.entry.last}"
 
   render: ->
