@@ -323,7 +323,7 @@
         className: "panel-body"
       }, React.DOM.div({
         className: "well"
-      }, React.DOM.p({}, "Wave: " + this.props.entry.wave), React.DOM.p({}, "Start: " + this.props.entry.start + " hour"), React.DOM.p({}, "Group: " + this.props.entry['club_name'])), this.state.loadRequested ? PbpRiderTable({
+      }, React.DOM.p({}, "Wave: " + this.props.entry.wave), React.DOM.p({}, "Start: " + this.props.entry.start + " hour"), React.DOM.p({}, "Group: " + this.props.entry['club_name']), React.DOM.p({}, "Frame: " + this.props.entry['fram'])), this.state.loadRequested ? PbpRiderTable({
         fram: this.props.entry.fram
       }) : React.DOM.div({}, ""))));
     }

@@ -282,6 +282,7 @@ Accordian = React.createClass
             React.DOM.p {}, "Wave: #{@props.entry.wave}"
             React.DOM.p {}, "Start: #{@props.entry.start} hour"
             React.DOM.p {}, "Group: #{@props.entry['club_name']}"
+            React.DOM.p {}, "Frame: #{@props.entry['fram']}"
           if @state.loadRequested
             PbpRiderTable fram: @props.entry.fram
           else
