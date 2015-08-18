@@ -89,8 +89,8 @@
   PbpRiderTable = React.createClass({
     getInitialState: function() {
       return {
-        checkPoints: ["START", "MORTAGNE", "VILLAINES", "FOUGERES", "TINTENIAC", "LOUDEAC", "CARHAIX", "BREST", "CARHAIX", "LOUDEAC", "TINTENIAC", "FOUGERES", "VILLAINES", "MORTAGNE", "DREUX", "FINISH"],
-        km: [0, 140, 221, 310, 364, 449, 525, 618, 703, 782, 867, 921, 1009, 1090, 1165, 1230],
+        checkPoints: ["START", "VILLAINES", "FOUGERES", "TINTENIAC", "LOUDEAC", "CARHAIX", "BREST", "CARHAIX", "LOUDEAC", "TINTENIAC", "FOUGERES", "VILLAINES", "MORTAGNE", "DREUX", "FINISH"],
+        km: [0, 221, 310, 364, 449, 525, 618, 703, 782, 867, 921, 1009, 1090, 1165, 1230],
         data: null
       };
     },
@@ -183,7 +183,6 @@
       return d + '/08 ' + this.conv_heure(t);
     },
     aff_km: function(data) {
-      var aff_moy;
       if (data[i] !== '') {
         next = i;
         return this.state.km[i];

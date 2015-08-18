@@ -69,7 +69,6 @@ PbpRiderTable = React.createClass
   getInitialState: ->
     checkPoints: [
       "START"
-      "MORTAGNE"
       "VILLAINES"
       "FOUGERES"
       "TINTENIAC"
@@ -87,7 +86,6 @@ PbpRiderTable = React.createClass
     ]
     km: [
       0
-      140
       221
       310
       364
@@ -169,7 +167,6 @@ PbpRiderTable = React.createClass
     d + '/08 ' + @conv_heure(t)
 
   aff_km: (data) ->
-    `var aff_moy`
     if data[i] != ''
       next = i
       @state.km[i]
