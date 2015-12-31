@@ -343,6 +343,6 @@ class Strava(object):
     def set_token_by_code(cls, code):
         self = cls()
         print "BEFORE", g
-        g['strava_token'] = self.get_access_token(code)
+        g.strava_token = self.get_access_token(code)
         print "AFTER", g
         return True
