@@ -33,12 +33,14 @@ def create_app(config_name):
     from .admin import admin as admin_blueprint
     from .auth import auth as auth_blueprint
     from .apartment import apartment as apartment_blueprint
+    from .strava import strava as strava_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(url_blueprint, url_prefix='/urls')
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(apartment_blueprint, url_prefix='/apartment')
+    app.register_blueprint(strava_blueprint, url_prefix='/strava')
 
     if not app.config['SSL_DISABLE']:
         from flask.ext.sslify import SSLify
