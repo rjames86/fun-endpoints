@@ -11,7 +11,7 @@ from . import route, as_json
 from flask.ext.login import login_user, logout_user, login_required, \
     current_user, redirect
 
-from ..model import Strava
+from ..models import Strava
 
 @auth.before_app_request
 def before_request():
