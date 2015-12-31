@@ -311,7 +311,7 @@ class Strava(object):
 
         self.client_id = current_app.config['STRAVA_CLIENT_ID']
         self.client_secret = current_app.config['STRAVA_CLIENT_SECRET']
-        self.redirect_uri = url_for('strava.confirm_auth')
+        self.redirect_uri = url_for('strava.confirm_auth', _external=True)
 
         self.client = StravaClient()
 

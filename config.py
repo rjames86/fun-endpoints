@@ -42,6 +42,7 @@ class ProductionConfig(Config):
 
 class HerokuConfig(ProductionConfig):
     SSL_DISABLE = bool(os.environ.get('SSL_DISABLE'))
+    SERVER_NAME = "fun-endpoints.herokuapp.com"
     @classmethod
     def init_app(cls, app):
         print "Using Heroku config"
