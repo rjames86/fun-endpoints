@@ -41,6 +41,7 @@ def confirm_auth():
 
 @as_json("/athlete")
 def athlete():
+    print session
     return Strava.athlete_by_token(session.get('strava_token'))
 
 

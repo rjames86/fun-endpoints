@@ -342,5 +342,7 @@ class Strava(object):
     @classmethod
     def set_token_by_code(cls, code):
         self = cls()
+        print "BEFORE", session
         session['strava_token'] = self.get_access_token(code)
+        print "AFTER", session
         return True
