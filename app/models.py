@@ -315,7 +315,7 @@ class Strava(object):
 
         client = StravaClient()
 
-    @clientmethod
+    @classmethod
     def authorization_url(cls):
         return cls.client.authorization_url(client_id=self.cliend_id, redirect_uri=self.redirect_uri)
 
