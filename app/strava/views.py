@@ -18,7 +18,7 @@ def before_request():
     endpoint = request.endpoint or ''
     print "ENDPOINT", endpoint
     print "REQUEST ENDPOINT", request.endpoint
-    if not session.get('strava_token') and endpoint != 'authorize.authorize':
+    if not session.get('strava_token') and endpoint != 'strava.authorize':
         return redirect(url_for('strava.authorize'))
 
 @route('/')
