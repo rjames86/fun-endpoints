@@ -36,7 +36,7 @@ def confirm_auth():
         return redirect(url_for('strava.authorize'))
     else:
         Strava.set_token_by_code(request.args.get('code'))
-        return
+    return redirect(url_for('strava.index'))
 
 @as_json("/athlete")
 def athlete():
