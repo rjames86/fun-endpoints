@@ -307,11 +307,13 @@ class ValidRider(db.Model):
         db.session.commit()
 
 class Strava(object):
-    client_id = current_app.config['STRAVA_CLIENT_ID']
-    client_secret = current_app.config['STRAVA_CLIENT_SECRET']
-    redirect_uri = url_for('strava.confirm_auth')
+    def __init__(self):
 
-    client = StravaClient()
+        client_id = current_app.config['STRAVA_CLIENT_ID']
+        client_secret = current_app.config['STRAVA_CLIENT_SECRET']
+        redirect_uri = url_for('strava.confirm_auth')
+
+        client = StravaClient()
 
     @clientmethod
     def authorization_url(cls):
