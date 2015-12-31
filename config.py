@@ -13,6 +13,8 @@ class Config:
     FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
     FLASKY_MAIL_SENDER = os.environ.get('MAIL_SENDER')
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
+    STRAVA_CLIENT_ID = os.environ.get('STRAVA_CLIENT_ID')
+    STRAVA_CLIENT_SECRET = os.environ.get('STRAVA_CLIENT_SECRET')
     SSL_DISABLE = True
 
     @staticmethod
