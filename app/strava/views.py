@@ -13,7 +13,7 @@ from flask.ext.login import login_user, logout_user, login_required, \
 
 from ..models import Strava
 
-@auth.before_app_request
+@strava.before_app_request
 def before_request():
     if not session.get('strava_token'):
         return redirect(url_for('strava.authorize'))
