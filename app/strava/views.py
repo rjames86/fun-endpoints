@@ -32,10 +32,10 @@ def authorize():
 @route('/auth/confirm')
 def confirm_auth():
     print "IN THE CONFIRM ENDPOINT"
-    if not request.get('code'):
+    if not request.args.get('code'):
         return redirect(url_for('strava.authorize'))
     else:
-        Strava.set_token_by_code(request.get('code'))
+        Strava.set_token_by_code(request.args.get('code'))
         return
 
 @as_json("/athlete")
