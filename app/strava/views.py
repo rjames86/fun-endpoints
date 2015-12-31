@@ -7,7 +7,7 @@ from flask import (
     current_app,
     jsonify,
 )
-from . import route, as_json
+from . import strava, route, as_json
 from flask.ext.login import login_user, logout_user, login_required, \
     current_user, redirect
 
