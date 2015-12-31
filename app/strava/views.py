@@ -6,6 +6,7 @@ from flask import (
     redirect,
     current_app,
     jsonify,
+    g,
 )
 from . import strava, route, as_json
 from flask.ext.login import login_user, logout_user, login_required, \
@@ -41,8 +42,8 @@ def confirm_auth():
 
 @as_json("/athlete")
 def athlete():
-    print session
-    return Strava.athlete_by_token(session.get('strava_token'))
+    print g
+    return Strava.athlete_by_token(g.get('strava_token'))
 
 
 

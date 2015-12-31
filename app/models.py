@@ -9,7 +9,7 @@ from stravalib.client import Client as StravaClient
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin, AnonymousUserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from flask import current_app, request, url_for, session
+from flask import current_app, request, url_for, session, g
 from . import db, login_manager
 import requests
 
@@ -342,7 +342,7 @@ class Strava(object):
     @classmethod
     def set_token_by_code(cls, code):
         self = cls()
-        print "BEFORE", session
-        session['strava_token'] = self.get_access_token(code)
-        print "AFTER", session
+        print "BEFORE", g
+        g['strava_token'] = self.get_access_token(code)
+        print "AFTER", g
         return True
