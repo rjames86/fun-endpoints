@@ -321,6 +321,7 @@ class Strava(object):
         return self.client.authorization_url(client_id=self.client_id, redirect_uri=self.redirect_uri)
 
     def get_access_token(self, code):
+        print "GOT CODE", code
         return self.client.exchange_code_for_token(client_id=self.client_id,
                                            client_secret=self.client_secret,
                                            code=code)
