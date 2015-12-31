@@ -13,13 +13,13 @@ from flask.ext.login import login_user, logout_user, login_required, \
 
 from ..models import Strava
 
-@strava.before_app_request
-def before_request():
-    endpoint = request.endpoint or ''
-    print "ENDPOINT", endpoint
-    if not session.get('strava_token'):
-        if 'auth' not in endpoint:
-            return redirect(url_for('strava.authorize'))
+#@strava.before_app_request
+#def before_request():
+#    endpoint = request.endpoint or ''
+#    print "ENDPOINT", endpoint
+#    if not session.get('strava_token'):
+#        if 'auth' not in endpoint:
+#            return redirect(url_for('strava.authorize'))
 
 @route('/')
 def index():
