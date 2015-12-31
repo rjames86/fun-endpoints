@@ -17,9 +17,9 @@ from ..models import Strava
 def before_request():
     endpoint = request.endpoint or ''
     print "ENDPOINT", endpoint
-    print "REQUEST ENDPOINT", request.endpoint
-    if not session.get('strava_token') or endpoint != 'strava.authorize':
-        return redirect(url_for('strava.authorize'))
+    if not session.get('strava_token'):
+        if 'auth' not in endpoint:
+            return redirect(url_for('strava.authorize'))
 
 @route('/')
 def index():
@@ -31,6 +31,7 @@ def authorize():
 
 @route('/auth/confirm')
 def confirm_auth():
+    print "IN THE CONFIRM ENDPOINT"
     if not request.get('code'):
         return redirect(url_for('strava.authorize'))
     else:
