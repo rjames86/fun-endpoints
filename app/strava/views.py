@@ -16,6 +16,8 @@ from ..models import Strava
 @strava.before_app_request
 def before_request():
     endpoint = request.endpoint or ''
+    print "ENDPOINT", endpoint
+    print "REQUEST ENDPOINT", request.endpoint
     if not session.get('strava_token') and endpoint != 'authorize.authorize':
         return redirect(url_for('strava.authorize'))
 
