@@ -1,6 +1,7 @@
 from utils import configure_log, make_error
 from flask import request, jsonify
 from functools import update_wrapper
+from werkzeug.contrib.cache import SimpleCache
 from ..models import User
 
 import logging
@@ -80,3 +81,20 @@ def require_token(restrict=None):
             return f(*args, **kw)
         return update_wrapper(inner, f)
     return outer
+
+CACHE_TIMEOUT = 300
+cache = SimpleCache()
+
+class cached(object):
+
+    def __init__(self, timeout=None):
+        self.timeout = timeout or CACHE_TIMEOUT
+
+    def __call__(self, f):
+        def decorator(*args, **kwargs):
+            response = cache.get(request.path)
+            if response is None:
+                response = f(*args, **kwargs)
+                cache.set(request.path, response, self.timeout)
+            return response
+        return decorator

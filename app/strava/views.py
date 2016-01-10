@@ -10,6 +10,7 @@ from flask import (
     g,
 )
 from . import strava, route, as_json
+from ..lib.decorators import cached
 from flask.ext.login import login_user, logout_user, login_required, \
     current_user, redirect
 
@@ -27,6 +28,7 @@ def before_request():
 
 
 @route('/')
+@cached()
 def index():
     activities = Strava.activities_by_token(session['strava_token'])
     calendar_info = CalendarInfo.by_activities(activities)
