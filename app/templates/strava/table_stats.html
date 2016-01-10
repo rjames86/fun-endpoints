@@ -1,0 +1,39 @@
+<table class="table table-bordered", align="center">
+    <tr>
+        <th>Month</th>
+        <th>Total 2016</th>
+        <th>Cumulative</th>
+        <th>2015</th>
+        <th>Best</th>
+    </tr>
+    {% for month in calendar_info.short_month_names %}
+    {% if month %}
+    <tr>
+    <td>{{ month }}</td>
+
+   <td>{{ "%0.2f" | format(activities.ride_distances.by_month_year(loop.index-1, 2016)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month_year(loop.index-1, 2016) }} rides</td>
+
+    <td>{{ "%0.2f" | format(activities.ride_distances.by_month(loop.index-1)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month(loop.index-1) }} rides</td>
+
+
+    <td>{{ "%0.2f" | format(activities.ride_distances.by_month_year(loop.index-1, 2015)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month_year(loop.index-1, 2015) }} rides</td>
+
+    {% set best_year, best_month, best_distance, best_count = activities.ride_distances.best_month(loop.index-1) %}
+    <td>{{ best_year }}<br>{{ "%.02f" | format(best_distance) }} {{activities.ride_distances.unit_name }}<br> {{ best_count }} rides</td>
+
+    </tr>
+    {% endif %}
+    {% endfor %}
+    <tr>
+        <td colspan="3" align="center">
+            <strong>2016 Total</strong><br>
+            {{ "%0.2f" | format(activities.ride_distances.by_year(2016)) }} {{activities.ride_distances.unit_name }}<br>
+            {{ activities.ride_counts.by_year(2016) }} rides<br>
+        </td>
+        <td>
+            <strong>2015 Total</strong><br>
+            {{ "%0.2f" | format(activities.ride_distances.by_year(2015)) }} {{activities.ride_distances.unit_name }}<br>
+            {{ activities.ride_counts.by_year(2015) }} rides<br>
+        </td>
+    </tr>
+</table>
