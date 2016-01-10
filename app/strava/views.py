@@ -28,7 +28,6 @@ def before_request():
 
 
 @route('/')
-@cached()
 def index():
     activities = Strava.activities_by_token(session['strava_token'])
     calendar_info = CalendarInfo.by_activities(activities)

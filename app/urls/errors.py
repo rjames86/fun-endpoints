@@ -10,6 +10,6 @@ def page_not_found(e):
 
 @urls.app_errorhandler(500)
 def something_broke(e):
-    response = jsonify({'error': 'Shit broke'})
+    response = jsonify({'error': 'Something broke :( :( :('})
     response.status_code = 500
     return response
