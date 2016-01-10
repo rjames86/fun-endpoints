@@ -68,13 +68,21 @@
           labels: {{ mileage_chart.range }},
           // Our series array that contains series objects or in this case series data arrays
           series: [
-            {{ mileage_chart.weekly_average }}
+            {{ mileage_chart.weekly_average | safe }}
           ]
         };
 
         var options = {
             height: "400px",
-            divisor: 5
+            divisor: 10,
+            onlyInteger: true,
+            axisX: {
+                type: Chartist.AutoScaleAxis,
+                onlyInteger: true,
+                labelInterpolationFnc: function(value) {
+                    return !(value % 10) ? value : undefined
+                }
+          }
         }
 
         new Chartist.Line('.ct-chart', data, options);

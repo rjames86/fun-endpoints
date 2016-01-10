@@ -4,6 +4,7 @@ from BeautifulSoup import BeautifulSoup as Soup
 import urllib
 import calendar
 from collections import defaultdict, Counter
+import json
 
 from stravalib.client import BatchedResultsIterator, Client as StravaClient
 from stravalib.model import BaseEntity, Athlete
@@ -569,10 +570,16 @@ class AverageMileageChart(object):
         to_ret = []
         for week_num in self.range:
             to_ret.append(
-                sum([self.activities.ride_distances.by_calendar_week(self.weeks_in_year[w-1]) for w in range(1, week_num + 1)]) / week_num
+                dict(
+                    x=week_num,
+                    y=sum([self.activities.ride_distances.by_calendar_week(self.weeks_in_year[w-1]) for w in range(1, week_num + 1)]) / week_num
+                )
             )
             if datetime.date.today() in self.weeks_in_year[week_num]:
-                return to_ret
+                latest_week = max([item['x'] for item in to_ret])
+                for additional_week in range(latest_week, self.range[-1]):
+                    to_ret.append(dict(x=additional_week, y=None))
+                return json.dumps(to_ret)
 
 
     @property

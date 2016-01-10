@@ -19,3 +19,8 @@ textarea {
     font-size: 24px !important;
   }
 }
+
+.ct-label {
+  font-size: 12px;
+  color:black;
+}
