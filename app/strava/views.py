@@ -4,6 +4,7 @@ from flask import (
     session,
     url_for,
     redirect,
+    make_response,
     current_app,
     jsonify,
     g,
@@ -12,19 +13,25 @@ from . import strava, route, as_json
 from flask.ext.login import login_user, logout_user, login_required, \
     current_user, redirect
 
-from ..models import Strava
+import datetime
 
-#@strava.before_app_request
-#def before_request():
-#    endpoint = request.endpoint or ''
-#    print "ENDPOINT", endpoint
-#    if not session.get('strava_token'):
-#        if 'auth' not in endpoint:
-#            return redirect(url_for('strava.authorize'))
+from ..models import Strava, CalendarInfo
+
+@strava.before_app_request
+def before_request():
+    if request.endpoint == 'strava.authorize' or request.args.get('code'):
+        return
+    if not session.get('strava_token'):
+        return redirect(url_for('strava.authorize'))
+
 
 @route('/')
 def index():
-    return render_template('strava/index.html')
+    activities = Strava.activities_by_token(session['strava_token'])
+    calendar_info = CalendarInfo()
+    return render_template('strava/index.html',
+                           activities=activities,
+                           calendar_info=calendar_info)
 
 @route('/auth/authorize')
 def authorize():
@@ -32,18 +39,17 @@ def authorize():
 
 @route('/auth/confirm')
 def confirm_auth():
-    print "IN THE CONFIRM ENDPOINT"
-    if not request.args.get('code'):
-        return redirect(url_for('strava.authorize'))
-    else:
-        print "GONNA SET CODE TO", request.args.get('code')
-        Strava.set_token_by_code(request.args.get('code'))
+    token = Strava().get_access_token(request.args.get('code'))
+    print "setting session"
+    session['strava_token'] = token
+    print session
     return redirect(url_for('strava.index'))
+
 
 @as_json("/athlete")
 def athlete():
-    print g
-    return Strava.athlete_by_token(g.get('strava_token'))
+    print "STRAVA TOKEN", session.get('strava_token')
+    return [Strava.athlete_by_token(session.get('strava_token'))]
 
 
 

@@ -5,15 +5,49 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/react/0.12.1/react.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+
 </head>
 <body>
-  <h1>SFR PBP</h1>
-  
-  <div id="react"/>
-  <script src="{{ url_for('static', filename='javascript/pbp.js') }}"></script>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <table class="table">
+                    <tr>
+                        <th>Month</th>
+                        <th>Total 2016</th>
+                        <th>Cumulative</th>
+                        <th>2015</th>
+                        <th>Best</th>
+                    </tr>
+                    {% for month in calendar_info.month_names %}
+                    {% if month %}
+                    <tr>
+                    <td>{{ month }}</td>
+
+                   <td>{{ "%0.2f" | format(activities.ride_distances.by_month_year(loop.index-1, 2016)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month_year(loop.index-1, 2016) }} rides</td>
+
+                    <td>{{ "%0.2f" | format(activities.ride_distances.by_month(loop.index-1)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month(loop.index-1) }} rides</td>
+
+
+                    <td>{{ "%02f" | format(activities.ride_distances.by_month_year(loop.index-1, 2015)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month_year(loop.index-1, 2015) }} rides</td>
+
+                    {% set best_year, best_month, best_distance, best_count = activities.ride_distances.best_month(loop.index-1) %}
+                    <td>{{ calendar_info.month_names[best_month] }}<br>{{ best_year }}<br>{{ "%.02f" | format(best_distance) }} {{activities.ride_distances.unit_name }}<br> {{ best_count }}</td>
+
+                    </tr>
+
+
+                    {% endif %}
+                    {% endfor %}
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
 </body>
 </html>

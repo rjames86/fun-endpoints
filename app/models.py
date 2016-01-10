@@ -2,8 +2,12 @@ from datetime import datetime
 import hashlib
 from BeautifulSoup import BeautifulSoup as Soup
 import urllib
+import calendar
+from collections import defaultdict, Counter
 
-from stravalib.client import Client as StravaClient
+from stravalib.client import BatchedResultsIterator, Client as StravaClient
+from stravalib.model import BaseEntity, Athlete
+from stravalib import unithelper
 
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -13,6 +17,21 @@ from flask import current_app, request, url_for, session, g
 from . import db, login_manager
 import requests
 
+
+import time
+
+def timer(method):
+
+    def timed(*args, **kw):
+        ts = time.time()
+        result = method(*args, **kw)
+        te = time.time()
+
+        print '%r (%r, %r) %2.2f sec' % \
+              (method.__name__, args, kw, te-ts)
+        return result
+
+    return timed
 
 def clean_keys(key):
     return key.replace(' ', '_').lower()
@@ -306,43 +325,188 @@ class ValidRider(db.Model):
             db.session.add(rider)
         db.session.commit()
 
+
+class MyAthlete(Athlete):
+    def __init__(self, **kwargs):
+        self.attrsdict = {}
+        super(Athlete, self).__init__(**kwargs)
+
+    def _asdict(self):
+        return self.attrsdict
+
+    @timer
+    def from_dict(self, d):
+        """
+        Populates this object from specified dict.
+        Only defined attributes will be set; warnings will be logged for invalid attributes.
+        """
+        for (k, v) in d.items():
+            # Only set defined attributes.
+            if hasattr(self.__class__, k):
+                self.log.debug("Setting attribute `{0}` [{1}] on entity {2} with value {3!r}".format(k, getattr(self.__class__, k).__class__.__name__, self, v))
+                try:
+                    setattr(self, k, v)
+                    self.attrsdict[k] = v
+                except AttributeError as x:
+                    raise AttributeError("Could not find attribute `{0}` on entity {1}, value: {2!r}.  (Original: {3!r})".format(k, self, v, x))
+            else:
+                self.log.warning("No such attribute {0} on entity {1}".format(k, self))
+
+
+class RideCounter(object):
+    def __init__(self, activities):
+        self.rides = activities.rides
+        self.activities = activities
+        self._counter_dict = None
+        # CalendarInfo().month_names.index(month_abbrev)
+
+    @property
+    @timer
+    def rides_count_by_month(self):
+        if not self._counter_dict:
+            year = defaultdict(dict)
+            for ride in self.rides:
+                ride_year = year[ride.start_date_local.year] or defaultdict(int)
+                ride_year[ride.start_date_local.month] += 1
+                year[ride.start_date_local.year] = ride_year
+            self._counter_dict = year
+        return self._counter_dict
+
+    def by_year(self, year):
+        return sum(self.rides_count_by_month[year].viewvalues())
+
+    def by_month(self, month):
+        to_ret = 0
+        for year, values in self.rides_count_by_month.iteritems():
+            for month, count in values.iteritems():
+                if month == month:
+                    to_ret += count
+
+        return to_ret
+
+    def by_month_year(self, month, year):
+        return self.rides_count_by_month[year][month]
+
+
+class DistanceCounter(object):
+    UNIT = 'miles'
+
+    def __init__(self, activities):
+        self.rides = activities.rides
+        self.activities = activities
+        self.unit_name = getattr(unithelper, self.UNIT).name
+
+    def get_distance(self, distance):
+        return getattr(unithelper, self.UNIT)(distance).num
+
+    def formatted_distance(self, distance):
+        return "%0.2f" % distance
+
+    def by_year(self, year):
+        to_ret = 0
+        for ride in self.rides:
+            if ride.start_date_local.year == year:
+                to_ret += self.get_distance(ride.distance)
+        return to_ret
+
+    def by_month(self, month):
+        to_ret = 0
+        for ride in self.rides:
+            if ride.start_date_local.month == month:
+                to_ret += self.get_distance(ride.distance)
+        return to_ret
+
+    def by_month_year(self, month, year):
+        to_ret = 0
+        for ride in self.rides:
+            if (ride.start_date_local.year, ride.start_date_local.month) == (year, month):
+                to_ret += self.get_distance(ride.distance)
+        return to_ret
+
+    def best_month(self, month):
+        all_years = set([ride.start_date_local.year for ride in self.rides])
+        print [(year, month, self.by_month_year(month, year)) for year in all_years]
+        return max(
+            [(year, month, self.by_month_year(month, year), self.activities.ride_counts.by_month_year(month, year)) for year in all_years],
+            key=lambda y: y[2]
+            )
+
+
+
+class Activities(object):
+    def __init__(self, activities):
+        self.activities = activities
+        self._rides = None
+
+
+    @property
+    @timer
+    def rides(self):
+        if not self._rides:
+            self._rides = [a for a in self.activities if a.type == 'Ride']
+        return self._rides
+
+    @property
+    def ride_counts(self):
+        return RideCounter(self)
+
+    @property
+    def ride_distances(self):
+        return DistanceCounter(self)
+
+
 class Strava(object):
     def __init__(self):
-
         self.client_id = current_app.config['STRAVA_CLIENT_ID']
         self.client_secret = current_app.config['STRAVA_CLIENT_SECRET']
         self.redirect_uri = url_for('strava.confirm_auth', _external=True)
 
         self.client = StravaClient()
 
+    @property
+    def athlete(self):
+        return self.client.get_athlete()
+
+    @property
+    def activities(self):
+        print 'activities'
+        return Activities(self.client.get_activities())
+
     @classmethod
+    @timer
     def authorization_url(cls):
         self = cls()
         return self.client.authorization_url(client_id=self.client_id, redirect_uri=self.redirect_uri)
 
+    @timer
     def get_access_token(self, code):
         print "GOT CODE", code
         return self.client.exchange_code_for_token(client_id=self.client_id,
                                            client_secret=self.client_secret,
                                            code=code)
-        
     @classmethod
+    @timer
     def athlete_by_code(cls, code):
         self = cls()
         self.client.access_token = self.get_access_token(code)
-        return self.client.get_athlete()
+        return self.athlete
 
     @classmethod
+    @timer
     def athlete_by_token(cls, token):
         self = cls()
         self.client.access_token = token
-        return self.client.get_athlete()
-    
+        return self.athlete
 
     @classmethod
-    def set_token_by_code(cls, code):
+    @timer
+    def activities_by_token(cls, token):
         self = cls()
-        print "BEFORE", g
-        g.strava_token = self.get_access_token(code)
-        print "AFTER", g
-        return True
+        self.client.access_token = token
+        return self.activities
+
+
+class CalendarInfo(object):
+    @property
+    def month_names(self):
+        return list(calendar.month_abbr)

@@ -24,8 +24,13 @@ def add_context(f):
 def as_json_context(f):
     def format_output(ret):
         data = []
+        if not isinstance(ret, list):
+            ret = [ret]
         for item in ret:
-            data.append(item._asdict())
+            try:
+                data.append(item._asdict())
+            except AttributeError:
+                data.append(item)
         return jsonify(data=data)
 
     def inner(*args, **kwargs):
