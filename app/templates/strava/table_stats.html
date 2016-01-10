@@ -11,10 +11,9 @@
     <tr>
     <td>{{ month }}</td>
 
-   <td>{{ "%0.2f" | format(activities.ride_distances.by_month_year(loop.index-1, 2016)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month_year(loop.index-1, 2016) }} rides</td>
+    <td>{{ "%0.2f" | format(activities.ride_distances.by_month_year(loop.index-1, 2016)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month_year(loop.index-1, 2016) }} rides</td>
 
     <td>{{ "%0.2f" | format(activities.ride_distances.by_month(loop.index-1)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month(loop.index-1) }} rides</td>
-
 
     <td>{{ "%0.2f" | format(activities.ride_distances.by_month_year(loop.index-1, 2015)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month_year(loop.index-1, 2015) }} rides</td>
 

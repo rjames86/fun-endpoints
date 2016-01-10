@@ -376,8 +376,8 @@ class RideCounter(object):
     def by_month(self, month):
         to_ret = 0
         for year, values in self.rides_count_by_month.iteritems():
-            for month, count in values.iteritems():
-                if month == month:
+            for month_value, count in values.iteritems():
+                if month_value == month:
                     to_ret += count
 
         return to_ret
