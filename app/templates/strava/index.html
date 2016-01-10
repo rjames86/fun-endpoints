@@ -23,6 +23,12 @@
       color: #fff;
       font-size: 22px;
     }
+    table {
+        text-align: center;
+    }
+    th {
+        text-align: center;
+    }
 
 </style>
 
@@ -38,7 +44,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
-                <table class="table">
+                <table class="table", align="center">
                     <tr>
                         <th>Month</th>
                         <th>Total 2016</th>
@@ -56,21 +62,119 @@
                     <td>{{ "%0.2f" | format(activities.ride_distances.by_month(loop.index-1)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month(loop.index-1) }} rides</td>
 
 
-                    <td>{{ "%02f" | format(activities.ride_distances.by_month_year(loop.index-1, 2015)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month_year(loop.index-1, 2015) }} rides</td>
+                    <td>{{ "%0.2f" | format(activities.ride_distances.by_month_year(loop.index-1, 2015)) }} {{activities.ride_distances.unit_name }}<br>{{ activities.ride_counts.by_month_year(loop.index-1, 2015) }} rides</td>
 
                     {% set best_year, best_month, best_distance, best_count = activities.ride_distances.best_month(loop.index-1) %}
-                    <td>{{ calendar_info.month_names[best_month] }}<br>{{ best_year }}<br>{{ "%.02f" | format(best_distance) }} {{activities.ride_distances.unit_name }}<br> {{ best_count }}</td>
+                    <td>{{ best_year }}<br>{{ "%.02f" | format(best_distance) }} {{activities.ride_distances.unit_name }}<br> {{ best_count }} rides</td>
 
                     </tr>
-
-
                     {% endif %}
                     {% endfor %}
+                    <tr>
+                        <td colspan="3" align="center">
+                            <strong>2016 Total</strong><br>
+                            {{ "%0.2f" | format(activities.ride_distances.by_year(2016)) }} {{activities.ride_distances.unit_name }}<br>
+                            {{ activities.ride_counts.by_year(2016) }} rides<br>
+                        </td>
+                        <td>
+                            <strong>2015 Total</strong><br>
+                            {{ "%0.2f" | format(activities.ride_distances.by_year(2015)) }} {{activities.ride_distances.unit_name }}<br>
+                            {{ activities.ride_counts.by_year(2015) }} rides<br>
+                        </td>
+                    </tr>
                 </table>
 
-
-
             </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 align="center">2016 Mileage Log</h3>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                        {% for year, year_calendars in calendars|dictsort(false, "key")|reverse %}
+                        <div class="year">
+                        <!-- <h2>{{ year }}</h2> -->
+                        {% for month in range(1,7) %}
+                          {% set calendar = year_calendars[month] %}
+                          <div class="month">
+                          <h3>{{ month_names[month] }}</h3>
+                          <table class="table">
+                            <tr>
+                              <th>S</th>
+                              <th>M</th>
+                              <th>T</th>
+                              <th>W</th>
+                              <th>T</th>
+                              <th>F</th>
+                              <th>S</th>
+                              <th>Week</th>
+                              <th>Cum</th>
+                            </tr>
+                        {% for calendar_row in calendar %}
+                            <tr>
+                        {% for calendar_cell in calendar_row %}
+                              <td class="{{calendar_cell["style_class"]}}">
+                        {% if "link" in calendar_cell %}
+                                <a href="{{ calendar_cell["link"] }}">{{calendar_cell["day_of_month"]}}</a>
+                        {% else %}
+                                {{calendar_cell["day_of_month"]}}
+                        {% endif %}
+                              </td>
+                        {% endfor %}
+                              <td>X</td>
+                              <td>X</td>
+                            </tr>
+                        {% endfor %}
+                          </table>
+                          </div>
+                        {% endfor %}
+                        </div>
+                        {% endfor %}
+                </div>
+                <div class="col-md-6">
+                        {% for year, year_calendars in calendars|dictsort(false, "key")|reverse %}
+                        <div class="year">
+                        <!-- <h2>{{ year }}</h2> -->
+                        {% for month in range(7, 13) %}
+                          {% set calendar = year_calendars[month] %}
+                          <div class="month">
+                          <h3>{{ month_names[month] }}</h3>
+                          <table class="table">
+                            <tr>
+                              <th>S</th>
+                              <th>M</th>
+                              <th>T</th>
+                              <th>W</th>
+                              <th>T</th>
+                              <th>F</th>
+                              <th>S</th>
+                              <th>Week</th>
+                              <th>Cum</th>
+                            </tr>
+                        {% for calendar_row in calendar %}
+                            <tr>
+                        {% for calendar_cell in calendar_row %}
+                              <td class="{{calendar_cell["style_class"]}}">
+                        {% if "link" in calendar_cell %}
+                                <a href="{{ calendar_cell["link"] }}">{{calendar_cell["day_of_month"]}}</a>
+                        {% else %}
+                                {{calendar_cell["day_of_month"]}}
+                        {% endif %}
+                              </td>
+                        {% endfor %}
+                              <td>X</td>
+                              <td>X</td>
+                            </tr>
+                        {% endfor %}
+                          </table>
+                          </div>
+                        {% endfor %}
+                        </div>
+                        {% endfor %}
+                </div>
+            </div>
+
         </div>
     </div>
 </body>
