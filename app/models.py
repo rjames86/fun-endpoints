@@ -401,40 +401,23 @@ class DistanceCounter(object):
         return "%0.2f" % distance
 
     def by_year(self, year):
-        to_ret = 0
-        for ride in self.rides:
-            if ride.start_date_local.year == year:
-                to_ret += self.get_distance(ride.distance)
-        return to_ret
+        return self._calculate_distance(lambda ride: ride.start_date_local.year == year)
 
     def by_month(self, month):
-        to_ret = 0
-        for ride in self.rides:
-            if ride.start_date_local.month == month:
-                to_ret += self.get_distance(ride.distance)
-        return to_ret
+        return self._calculate_distance(lambda ride: ride.start_date_local.month == month)
 
     def by_month_year(self, month, year):
-        to_ret = 0
-        for ride in self.rides:
-            if (ride.start_date_local.year, ride.start_date_local.month) == (year, month):
-                to_ret += self.get_distance(ride.distance)
-        return to_ret
+        return self._calculate_distance(
+            lambda ride: (ride.start_date_local.year, ride.start_date_local.month) == (year, month))
 
     def by_day_month_year(self, day, month, year):
         # TODO probably should memoize this at some point so its faster.
-        to_ret = 0
-        for ride in self.rides:
-            if (ride.start_date_local.year, ride.start_date_local.month, ride.start_date_local.day) == (year, month, day):
-                to_ret += self.get_distance(ride.distance)
-        return to_ret
+        return self._calculate_distance(
+            lambda ride: (ride.start_date_local.year, ride.start_date_local.month, ride.start_date_local.day) == (year, month, day))
 
     def by_calendar_week(self, cal_week):
-        to_ret = 0
-        for ride in self.rides:
-            if (ride.start_date_local.date() > cal_week[0]) and (ride.start_date_local.date() <= cal_week[-1]):
-                to_ret += self.get_distance(ride.distance)
-        return to_ret
+        return self._calculate_distance(
+            lambda ride: (ride.start_date_local.date() > cal_week[0]) and (ride.start_date_local.date() <= cal_week[-1]))
 
     def best_month(self, month):
         all_years = set([ride.start_date_local.year for ride in self.rides])
@@ -443,6 +426,12 @@ class DistanceCounter(object):
             key=lambda y: y[2]
             )
 
+    def _calculate_distance(self, comparator):
+        to_ret = 0
+        for ride in self.rides:
+            if comparator(ride):
+                to_ret += self.get_distance(ride.distance)
+        return to_ret
 
 class Activities(object):
     def __init__(self, activities):
