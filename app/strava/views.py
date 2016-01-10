@@ -17,6 +17,7 @@ import datetime
 
 from ..models import Strava, CalendarInfo
 
+
 @strava.before_app_request
 def before_request():
     if request.endpoint == 'strava.authorize' or request.args.get('code'):
@@ -34,24 +35,19 @@ def index():
                            activities=activities,
                            calendar_info=calendar_info)
 
+
 @route('/auth/authorize')
 def authorize():
     return redirect(Strava.authorization_url())
 
+
 @route('/auth/confirm')
 def confirm_auth():
     token = Strava().get_access_token(request.args.get('code'))
-    print "setting session"
     session['strava_token'] = token
-    print session
     return redirect(url_for('strava.index'))
 
 
 @as_json("/athlete")
 def athlete():
-    print "STRAVA TOKEN", session.get('strava_token')
     return [Strava.athlete_by_token(session.get('strava_token'))]
-
-
-
-

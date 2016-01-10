@@ -334,7 +334,6 @@ class MyAthlete(Athlete):
     def _asdict(self):
         return self.attrsdict
 
-    @timer
     def from_dict(self, d):
         """
         Populates this object from specified dict.
@@ -361,7 +360,6 @@ class RideCounter(object):
         # CalendarInfo().month_names.index(month_abbrev)
 
     @property
-    @timer
     def rides_count_by_month(self):
         if not self._counter_dict:
             year = defaultdict(dict)
@@ -451,9 +449,7 @@ class Activities(object):
         self.activities = activities
         self._rides = None
 
-
     @property
-    @timer
     def rides(self):
         if not self._rides:
             self._rides = [a for a in self.activities if a.type == 'Ride']
@@ -482,39 +478,32 @@ class Strava(object):
 
     @property
     def activities(self):
-        print 'activities'
         return Activities(self.client.get_activities())
 
     @classmethod
-    @timer
     def authorization_url(cls):
         self = cls()
         return self.client.authorization_url(client_id=self.client_id,
                                              redirect_uri=self.redirect_uri)
 
-    @timer
     def get_access_token(self, code):
-        print "GOT CODE", code
         return self.client.exchange_code_for_token(client_id=self.client_id,
                                                    client_secret=self.client_secret,
                                                    code=code)
 
     @classmethod
-    @timer
     def athlete_by_code(cls, code):
         self = cls()
         self.client.access_token = self.get_access_token(code)
         return self.athlete
 
     @classmethod
-    @timer
     def athlete_by_token(cls, token):
         self = cls()
         self.client.access_token = token
         return self.athlete
 
     @classmethod
-    @timer
     def activities_by_token(cls, token):
         self = cls()
         self.client.access_token = token
@@ -554,9 +543,7 @@ class CalendarInfo(object):
                     week_list = []
                     for date in week:
                         date_info = {}
-                        print "DATE", (date, month, year)
                         date_ride_distance = self.activities.ride_distances.by_day_month_year(date.day, date.month, date.year)
-                        print "DISTANCE", date_ride_distance
                         if date_ride_distance:
                             date_info["ride_distance"] = date_ride_distance
 
