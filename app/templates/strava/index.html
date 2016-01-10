@@ -1,3 +1,5 @@
+{% import "bootstrap/google.html" as google %}
+
 <!doctype html>
 <html>
 <head>
@@ -6,7 +8,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-
+{{google.uanalytics('UA-2291030-4')}}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 <style type="text/css">
 
