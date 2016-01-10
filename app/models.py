@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 import hashlib
 from BeautifulSoup import BeautifulSoup as Soup
 import urllib
@@ -109,8 +109,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(64), unique=True, index=True)
     name = db.Column(db.String(64))
     password_hash = db.Column(db.String(128))
-    member_since = db.Column(db.DateTime(), default=datetime.utcnow)
-    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
+    member_since = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
+    last_seen = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
     token = db.Column(db.String(64), default=None)
 
     confirmed = db.Column(db.Boolean, default=False)
@@ -202,7 +202,7 @@ class User(UserMixin, db.Model):
         return to_ret
 
     def ping(self):
-        self.last_seen = datetime.utcnow()
+        self.last_seen = datetime.datetime.utcnow()
         db.session.add(self)
 
     def reset_token(self, new_token):
@@ -548,3 +548,35 @@ class CalendarInfo(object):
 
                     calendars[year][month].append(week_list)
         return calendars
+
+class AverageMileageChart(object):
+    @classmethod
+    def by_activities(cls, activities):
+        self = cls()
+        self.activities = activities
+        return self
+
+    @property
+    def weeks_in_year(self):
+        cal = calendar.Calendar()
+        cal.setfirstweekday(6)
+        all_weeks = [item for sublist in [cal.monthdatescalendar(2016, month) for month in range(1,13)] for item in sublist]
+        # Get the unique list of weeks
+        return sorted([list(w) for w in set(tuple(w) for w in all_weeks)], key=lambda i: i[0])
+
+    @property
+    def weekly_average(self):
+        to_ret = []
+        for week_num in self.range:
+            to_ret.append(
+                sum([self.activities.ride_distances.by_calendar_week(self.weeks_in_year[w-1]) for w in range(1, week_num + 1)]) / week_num
+            )
+            if datetime.date.today() in self.weeks_in_year[week_num]:
+                return to_ret
+
+
+    @property
+    def range(self):
+        return range(1, len(self.weeks_in_year) + 1)
+
+

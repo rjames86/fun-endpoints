@@ -5,9 +5,12 @@
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
 {{google.uanalytics('UA-2291030-4')}}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 <style type="text/css">
@@ -51,8 +54,31 @@
             <div class="col-md-8">
             {% include 'strava/calendar.html' %}
             </div>
-
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Average Weekly Mileage</h2>
+                <div class="ct-chart"></div>
+            </div>
         </div>
     </div>
+    <script type="text/javascript">
+        var data = {
+          // A labels array that can contain any sort of values
+          labels: {{ mileage_chart.range }},
+          // Our series array that contains series objects or in this case series data arrays
+          series: [
+            {{ mileage_chart.weekly_average }}
+          ]
+        };
+
+        var options = {
+            height: "400px",
+            divisor: 5
+        }
+
+        new Chartist.Line('.ct-chart', data, options);
+
+    </script>
 </body>
 </html>
