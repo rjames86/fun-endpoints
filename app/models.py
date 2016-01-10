@@ -423,14 +423,27 @@ class DistanceCounter(object):
                 to_ret += self.get_distance(ride.distance)
         return to_ret
 
+    def by_day_month_year(self, day, month, year):
+        # TODO probably should memoize this at some point so its faster.
+        to_ret = 0
+        for ride in self.rides:
+            if (ride.start_date_local.year, ride.start_date_local.month, ride.start_date_local.day) == (year, month, day):
+                to_ret += self.get_distance(ride.distance)
+        return to_ret
+
+    def by_calendar_week(self, cal_week):
+        to_ret = 0
+        for ride in self.rides:
+            if (ride.start_date_local.date() > cal_week[0]) and (ride.start_date_local.date() <= cal_week[-1]):
+                to_ret += self.get_distance(ride.distance)
+        return to_ret
+
     def best_month(self, month):
         all_years = set([ride.start_date_local.year for ride in self.rides])
-        print [(year, month, self.by_month_year(month, year)) for year in all_years]
         return max(
             [(year, month, self.by_month_year(month, year), self.activities.ride_counts.by_month_year(month, year)) for year in all_years],
             key=lambda y: y[2]
             )
-
 
 
 class Activities(object):
@@ -476,14 +489,16 @@ class Strava(object):
     @timer
     def authorization_url(cls):
         self = cls()
-        return self.client.authorization_url(client_id=self.client_id, redirect_uri=self.redirect_uri)
+        return self.client.authorization_url(client_id=self.client_id,
+                                             redirect_uri=self.redirect_uri)
 
     @timer
     def get_access_token(self, code):
         print "GOT CODE", code
         return self.client.exchange_code_for_token(client_id=self.client_id,
-                                           client_secret=self.client_secret,
-                                           code=code)
+                                                   client_secret=self.client_secret,
+                                                   code=code)
+
     @classmethod
     @timer
     def athlete_by_code(cls, code):
@@ -508,5 +523,52 @@ class Strava(object):
 
 class CalendarInfo(object):
     @property
-    def month_names(self):
+    def short_month_names(self):
         return list(calendar.month_abbr)
+
+    @property
+    def full_month_names(self):
+        return list(calendar.month_name)
+
+    @classmethod
+    def by_activities(cls, activities):
+        self = cls()
+        self.activities = activities
+        return self
+
+    def ride_calendar(self):
+        calendars = {}
+
+        cal = calendar.Calendar()
+        # Render weeks beginning on Sunday
+        cal.setfirstweekday(6)
+
+        for year in [2016]:
+            if year not in calendars:
+                calendars[year] = {}
+            for month in range(1, 13):
+
+                calendars[year][month] = []
+
+                for week in cal.monthdatescalendar(year, month):
+                    week_list = []
+                    for date in week:
+                        date_info = {}
+                        print "DATE", (date, month, year)
+                        date_ride_distance = self.activities.ride_distances.by_day_month_year(date.day, date.month, date.year)
+                        print "DISTANCE", date_ride_distance
+                        if date_ride_distance:
+                            date_info["ride_distance"] = date_ride_distance
+
+                        date_info["day_of_month"] = date.day
+                        date_info["week_total_distance"] = self.activities.ride_distances.by_calendar_week(week)
+
+                        if date.month == month:
+                            date_info["style_class"] = "cur_month_date"
+                        else:
+                            date_info["style_class"] = "adjacent_month_date"
+
+                        week_list.append(date_info)
+
+                    calendars[year][month].append(week_list)
+        return calendars

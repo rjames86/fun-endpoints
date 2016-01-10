@@ -44,7 +44,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
-                <table class="table", align="center">
+                <table class="table table-bordered", align="center">
                     <tr>
                         <th>Month</th>
                         <th>Total 2016</th>
@@ -52,7 +52,7 @@
                         <th>2015</th>
                         <th>Best</th>
                     </tr>
-                    {% for month in calendar_info.month_names %}
+                    {% for month in calendar_info.short_month_names %}
                     {% if month %}
                     <tr>
                     <td>{{ month }}</td>
@@ -92,14 +92,14 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                        {% for year, year_calendars in calendars|dictsort(false, "key")|reverse %}
+                        {% for year, year_calendars in calendar_info.ride_calendar()|dictsort(false, "key")|reverse %}
                         <div class="year">
                         <!-- <h2>{{ year }}</h2> -->
                         {% for month in range(1,7) %}
                           {% set calendar = year_calendars[month] %}
                           <div class="month">
-                          <h3>{{ month_names[month] }}</h3>
-                          <table class="table">
+                          <h3>{{ calendar_info.full_month_names[month] }}</h3>
+                          <table class="table table-bordered">
                             <tr>
                               <th>S</th>
                               <th>M</th>
@@ -109,21 +109,22 @@
                               <th>F</th>
                               <th>S</th>
                               <th>Week</th>
-                              <th>Cum</th>
                             </tr>
                         {% for calendar_row in calendar %}
                             <tr>
                         {% for calendar_cell in calendar_row %}
                               <td class="{{calendar_cell["style_class"]}}">
-                        {% if "link" in calendar_cell %}
-                                <a href="{{ calendar_cell["link"] }}">{{calendar_cell["day_of_month"]}}</a>
+                        {% if "ride_distance" in calendar_cell %}
+                                {{calendar_cell["day_of_month"]}}<br>
+                                {{"%0.2f" | format(calendar_cell["ride_distance"])}} {{activities.ride_distances.unit_name}}
                         {% else %}
                                 {{calendar_cell["day_of_month"]}}
                         {% endif %}
-                              </td>
+                        {% if loop.last %}
+                        </td>
+                        <td>{{"%0.2f" | format(calendar_cell["week_total_distance"])}}</td>
+                        {% endif %}
                         {% endfor %}
-                              <td>X</td>
-                              <td>X</td>
                             </tr>
                         {% endfor %}
                           </table>
@@ -133,14 +134,14 @@
                         {% endfor %}
                 </div>
                 <div class="col-md-6">
-                        {% for year, year_calendars in calendars|dictsort(false, "key")|reverse %}
+                        {% for year, year_calendars in calendar_info.ride_calendar()|dictsort(false, "key")|reverse %}
                         <div class="year">
                         <!-- <h2>{{ year }}</h2> -->
                         {% for month in range(7, 13) %}
                           {% set calendar = year_calendars[month] %}
                           <div class="month">
-                          <h3>{{ month_names[month] }}</h3>
-                          <table class="table">
+                          <h3>{{ calendar_info.full_month_names[month] }}</h3>
+                          <table class="table table-bordered">
                             <tr>
                               <th>S</th>
                               <th>M</th>
@@ -149,22 +150,23 @@
                               <th>T</th>
                               <th>F</th>
                               <th>S</th>
-                              <th>Week</th>
-                              <th>Cum</th>
+                              <th>Total</th>
                             </tr>
                         {% for calendar_row in calendar %}
                             <tr>
                         {% for calendar_cell in calendar_row %}
                               <td class="{{calendar_cell["style_class"]}}">
-                        {% if "link" in calendar_cell %}
-                                <a href="{{ calendar_cell["link"] }}">{{calendar_cell["day_of_month"]}}</a>
+                        {% if "ride_distance" in calendar_cell %}
+                                {{calendar_cell["day_of_month"]}}<br>
+                                {{"%0.2f" | format(calendar_cell["ride_distance"])}} {{activities.ride_distances.unit_name}}
                         {% else %}
                                 {{calendar_cell["day_of_month"]}}
                         {% endif %}
-                              </td>
+                        {% if loop.last %}
+                        </td>
+                        <td>{{"%0.2f" | format(calendar_cell["week_total_distance"])}}</td>
+                        {% endif %}
                         {% endfor %}
-                              <td>X</td>
-                              <td>X</td>
                             </tr>
                         {% endfor %}
                           </table>

@@ -28,47 +28,10 @@ def before_request():
 @route('/')
 def index():
     activities = Strava.activities_by_token(session['strava_token'])
-    calendar_info = CalendarInfo()
-    import calendar
-
-    calendars = {}
-
-    cal = calendar.Calendar()
-    # Render weeks beginning on Sunday
-    cal.setfirstweekday(6)
-
-    for year in [2016]:
-
-
-        if year not in calendars:
-            calendars[year] = {}
-        for month in range(1, 13):
-
-            calendars[year][month] = []
-
-            for week in cal.monthdatescalendar(year, month):
-                week_list = []
-                for date in week:
-                    date_info = {}
-
-                    if date:
-                        date_info["link"] = "some link"
-
-                    date_info["day_of_month"] = date.day
-
-                    if date.month == month:
-                        date_info["style_class"] = "cur_month_date"
-                    else:
-                        date_info["style_class"] = "adjacent_month_date"
-
-                    week_list.append(date_info)
-
-                calendars[year][month].append(week_list)
+    calendar_info = CalendarInfo.by_activities(activities)
 
     return render_template('strava/index.html',
                            activities=activities,
-                           calendars=calendars,
-                           month_names=calendar.month_name,
                            calendar_info=calendar_info)
 
 @route('/auth/authorize')
