@@ -128,6 +128,12 @@ class Activities(object):
         'run': 'Running'
     }
 
+    ALL_ACTIVITY_TYPES = [
+            'ride', 'run', 'swim', 'workout', 'hike', 'walk', 'nordicski',
+            'alpineski', 'backcountryski', 'iceskate', 'inlineskate', 'kitesurf', 'rollerski',
+            'windsurf', 'workout', 'snowboard', 'snowshoe'
+    ]
+
     def __init__(self, activities, activity_type):
         self._chosen_activities = None
 
@@ -169,13 +175,6 @@ class Activities(object):
 
 class Strava(object):
     def __init__(self):
-        """
-        Valid activity types are:
-            ride, run, swim, workout, hike, walk, nordicski,
-            alpineski, backcountryski, iceskate, inlineskate, kitesurf, rollerski,
-            windsurf, workout, snowboard, snowshoe
-        """
-
         self.client_id = current_app.config['STRAVA_CLIENT_ID']
         self.client_secret = current_app.config['STRAVA_CLIENT_SECRET']
         self.redirect_uri = url_for('strava.confirm_auth', _external=True)
