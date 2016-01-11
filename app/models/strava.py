@@ -253,7 +253,7 @@ class CalendarInfo(object):
 
         cal = calendar.Calendar()
         # Render weeks beginning on Sunday
-        cal.setfirstweekday(6)
+        # cal.setfirstweekday(6)
 
         for year in [2016]:
             if year not in calendars:
@@ -293,7 +293,7 @@ class AverageMileageChart(object):
     @property
     def weeks_in_year(self):
         cal = calendar.Calendar()
-        cal.setfirstweekday(6)
+        # cal.setfirstweekday(6)
         all_weeks = [item for sublist in [cal.monthdatescalendar(2016, month) for month in range(1,13)] for item in sublist]
         # Get the unique list of weeks
         return sorted([list(w) for w in set(tuple(w) for w in all_weeks)], key=lambda i: i[0])
