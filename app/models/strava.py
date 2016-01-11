@@ -142,6 +142,10 @@ class Activities(object):
         self.chosen_activities = self.get_chosen_activities()
 
     @property
+    def available_activity_types(self):
+        return set(a.type for a in self.activities)
+
+    @property
     def human_activity_type(self):
         return self.TYPE_TO_NAME.get(self.activity_type, self.activity_type.title())
 
