@@ -5,6 +5,7 @@ import urllib
 import calendar
 from collections import defaultdict, Counter
 import json
+import math
 
 from stravalib.client import BatchedResultsIterator, Client as StravaClient
 from stravalib.model import BaseEntity, Athlete
@@ -566,7 +567,7 @@ class AverageMileageChart(object):
         return sorted([list(w) for w in set(tuple(w) for w in all_weeks)], key=lambda i: i[0])
 
     @property
-    def weekly_average(self):
+    def graph_weekly_average(self):
         to_ret = []
         for week_num in self.range:
             to_ret.append(
@@ -581,6 +582,18 @@ class AverageMileageChart(object):
                     to_ret.append(dict(x=additional_week, y=None))
                 return json.dumps(to_ret)
 
+    @property
+    def weekly_average(self):
+        to_ret = []
+        for week_num in self.range:
+            to_ret.append(
+                (week_num, sum([self.activities.ride_distances.by_calendar_week(self.weeks_in_year[w-1]) for w in range(1, week_num + 1)]) / week_num)
+            )
+
+        first_half = int(math.ceil(len(to_ret) / 2.0))
+
+        second_half = len(to_ret) - first_half
+        return map(None, to_ret[:first_half], to_ret[second_half+1:])
 
     @property
     def range(self):

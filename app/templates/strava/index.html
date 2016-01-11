@@ -56,10 +56,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <h2>Average Weekly Mileage</h2>
                 <div class="ct-chart"></div>
             </div>
+            <div class="col-md-4">
+                {% include 'strava/mileagechart.html' %}
+            </div>
+
         </div>
     </div>
     <script type="text/javascript">
@@ -68,7 +72,7 @@
           labels: {{ mileage_chart.range }},
           // Our series array that contains series objects or in this case series data arrays
           series: [
-            {{ mileage_chart.weekly_average | safe }}
+            {{ mileage_chart.graph_weekly_average | safe }}
           ]
         };
 
