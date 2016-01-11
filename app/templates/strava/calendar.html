@@ -28,7 +28,7 @@
               <td class="{{calendar_cell["style_class"]}}">
         {% if "ride_distance" in calendar_cell %}
                 {{calendar_cell["day_of_month"]}}<br>
-                {{"%0.2f" | format(calendar_cell["ride_distance"])}} {{activities.ride_distances.unit_name}}
+                {{"%0.2f" | format(calendar_cell["ride_distance"])}} {{activities.activity_distances.unit_name}}
         {% else %}
                 {{calendar_cell["day_of_month"]}}
         {% endif %}
@@ -70,7 +70,7 @@
               <td class="{{calendar_cell["style_class"]}}">
         {% if "ride_distance" in calendar_cell %}
                 {{calendar_cell["day_of_month"]}}<br>
-                {{"%0.2f" | format(calendar_cell["ride_distance"])}} {{activities.ride_distances.unit_name}}
+                {{"%0.2f" | format(calendar_cell["ride_distance"])}} {{activities.activity_distances.unit_name}}
         {% else %}
                 {{calendar_cell["day_of_month"]}}
         {% endif %}

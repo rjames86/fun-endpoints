@@ -12,7 +12,7 @@ from flask.ext.login import login_user, logout_user, login_required, \
     current_user
 from ..lib.mt_counties import mt_counties as counties
 from .. import db
-from ..models import Riders, RiderStatus, ValidRider
+from app.models.models import Riders, RiderStatus, ValidRider
 from ..email import send_email
 from forms import CountyForm, AddRider
 

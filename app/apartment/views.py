@@ -3,7 +3,7 @@ from flask.ext.login import login_user, logout_user, login_required, \
     current_user
 from . import apartment
 from .. import db
-from ..models import User, Permission, Role, ApartmentUnits
+from app.models.models import User, Permission, Role, ApartmentUnits
 from ..decorators import admin_required, permission_required
 from forms import EditProfileForm, EditProfileAdminForm
 from ..lib.parse_transaction import TransactionParser

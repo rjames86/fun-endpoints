@@ -1,6 +1,6 @@
 from flask import Blueprint
 from ..lib.decorators import gen_route_decorator
-from ..models import ApartmentUnits, Permission
+from app.models.models import ApartmentUnits, Permission
 
 apartment = Blueprint('apartment', __name__)
 route = gen_route_decorator(apartment)

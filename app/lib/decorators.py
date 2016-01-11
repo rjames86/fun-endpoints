@@ -2,7 +2,7 @@ from utils import configure_log, make_error
 from flask import request, jsonify
 from functools import update_wrapper
 from werkzeug.contrib.cache import SimpleCache
-from ..models import User
+from app.models.models import User
 
 import logging
 

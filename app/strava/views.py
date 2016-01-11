@@ -16,7 +16,7 @@ from flask.ext.login import login_user, logout_user, login_required, \
 
 import datetime
 
-from ..models import Strava, CalendarInfo, AverageMileageChart
+from app.models.strava import Strava, CalendarInfo, AverageMileageChart
 
 
 @strava.before_app_request
@@ -29,14 +29,28 @@ def before_request():
 
 @route('/')
 def index():
-    activities = Strava.activities_by_token(session['strava_token'])
-    calendar_info = CalendarInfo.by_activities(activities)
-    mileage_chart = AverageMileageChart.by_activities(activities)
+    strava = Strava.by_token(session['strava_token'])
+    calendar_info = CalendarInfo.by_activities(strava.activities)
+    mileage_chart = AverageMileageChart.by_activities(strava.activities)
 
     return render_template('strava/index.html',
-                           activities=activities,
+                           activities=strava.activities,
                            calendar_info=calendar_info,
                            mileage_chart=mileage_chart)
+
+
+@route('/runs')
+def runs():
+    strava = Strava.by_token(session['strava_token'])
+    strava.activity_type = 'runs'
+    calendar_info = CalendarInfo.by_activities(strava.activities)
+    mileage_chart = AverageMileageChart.by_activities(strava.activities)
+
+    return render_template('strava/index.html',
+                           activities=strava.activities,
+                           calendar_info=calendar_info,
+                           mileage_chart=mileage_chart)
+
 
 
 @route('/auth/authorize')

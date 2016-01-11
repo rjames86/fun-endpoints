@@ -9,10 +9,10 @@
     {% for (first, second) in mileage_chart.weekly_average %}
     <tr>
         <td>{{ first[0] }}</td>
-        <td>{{ "%0.2f" | format(first[1]) }} {{activities.ride_distances.unit_name }}</td>
+        <td>{{ "%0.2f" | format(first[1]) }} {{activities.activity_distances.unit_name }}</td>
         {% if second %}
         <td>{{ second[0] }}</td>
-        <td>{{ "%0.2f" | format(second[1]) }} {{activities.ride_distances.unit_name }}</td>
+        <td>{{ "%0.2f" | format(second[1]) }} {{activities.activity_distances.unit_name }}</td>
         {% endif %}
     </tr>
     {% endfor %}

@@ -5,7 +5,7 @@ from flask import (
     url_for
 )
 from . import admin
-from ..models import User
+from app.models.models import User
 from .. import db
 from forms import TokenForm
 from flask.ext.login import login_required
