@@ -102,7 +102,7 @@ class DistanceCounter(object):
 
     def by_calendar_week(self, cal_week):
         return self._calculate_distance(
-            lambda ride: (ride.start_date_local.date() > cal_week[0]) and (ride.start_date_local.date() <= cal_week[-1]))
+            lambda ride: (ride.start_date_local.date() >= cal_week[0]) and (ride.start_date_local.date() <= cal_week[-1]))
 
     def best_month(self, month):
         all_years = set([chosen_activity.start_date_local.year for chosen_activity in self.chosen_activities])
@@ -229,7 +229,7 @@ class CalendarInfo(object):
         self.activities = activities
         return self
 
-    def ride_calendar(self):
+    def activity_calendar(self):
         calendars = {}
 
         cal = calendar.Calendar()

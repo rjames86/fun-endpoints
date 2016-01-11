@@ -11,14 +11,14 @@
     <tr>
     <td>{{ month }}</td>
 
-    <td>{{ "%0.2f" | format(activities.activity_distances.by_month_year(loop.index-1, 2016)) }} {{activities.activity_distances.unit_name }}<br>{{ activities.activity_counts.by_month_year(loop.index-1, 2016) }} rides</td>
+    <td>{{ "%0.2f" | format(activities.activity_distances.by_month_year(loop.index-1, 2016)) }} {{activities.activity_distances.unit_name }}<br>{{ activities.activity_counts.by_month_year(loop.index-1, 2016) }} {{activities.activity_type }}</td>
 
-    <td>{{ "%0.2f" | format(activities.activity_distances.by_month(loop.index-1)) }} {{activities.activity_distances.unit_name }}<br>{{ activities.activity_counts.by_month(loop.index-1) }} rides</td>
+    <td>{{ "%0.2f" | format(activities.activity_distances.by_month(loop.index-1)) }} {{activities.activity_distances.unit_name }}<br>{{ activities.activity_counts.by_month(loop.index-1) }} {{activities.activity_type }}</td>
 
-    <td>{{ "%0.2f" | format(activities.activity_distances.by_month_year(loop.index-1, 2015)) }} {{activities.activity_distances.unit_name }}<br>{{ activities.activity_counts.by_month_year(loop.index-1, 2015) }} rides</td>
+    <td>{{ "%0.2f" | format(activities.activity_distances.by_month_year(loop.index-1, 2015)) }} {{activities.activity_distances.unit_name }}<br>{{ activities.activity_counts.by_month_year(loop.index-1, 2015) }} {{activities.activity_type }}</td>
 
     {% set best_year, best_month, best_distance, best_count = activities.activity_distances.best_month(loop.index-1) %}
-    <td>{{ best_year }}<br>{{ "%.02f" | format(best_distance) }} {{activities.activity_distances.unit_name }}<br> {{ best_count }} rides</td>
+    <td>{{ best_year }}<br>{{ "%.02f" | format(best_distance) }} {{activities.activity_distances.unit_name }}<br> {{ best_count }} {{activities.activity_type }}</td>
 
     </tr>
     {% endif %}
@@ -27,12 +27,12 @@
         <td colspan="3" align="center">
             <strong>2016 Total</strong><br>
             {{ "%0.2f" | format(activities.activity_distances.by_year(2016)) }} {{activities.activity_distances.unit_name }}<br>
-            {{ activities.activity_counts.by_year(2016) }} rides<br>
+            {{ activities.activity_counts.by_year(2016) }} {{activities.activity_type }}<br>
         </td>
         <td>
             <strong>2015 Total</strong><br>
             {{ "%0.2f" | format(activities.activity_distances.by_year(2015)) }} {{activities.activity_distances.unit_name }}<br>
-            {{ activities.activity_counts.by_year(2015) }} rides<br>
+            {{ activities.activity_counts.by_year(2015) }} {{activities.activity_type }}<br>
         </td>
     </tr>
 </table>
