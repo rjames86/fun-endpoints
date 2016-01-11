@@ -121,21 +121,24 @@ class DistanceCounter(object):
 
 class Activities(object):
     TYPE_TO_NAME = {
-        'rides': 'Cycling',
-        'runs': 'Running'
+        'ride': 'Cycling',
+        'run': 'Running'
     }
+
     def __init__(self, activities, activity_type):
         self.activities = activities
         self.activity_type = activity_type
-        self._rides = None
-        self._runs = None
+        self._chosen_activities = None
 
     @property
     def human_activity_type(self):
-        return self.TYPE_TO_NAME.get(self.activity_type)
+        return self.TYPE_TO_NAME.get(self.activity_type, '')
 
     def chosen_activity(self):
-        return getattr(self, self.activity_type)
+        if not self._chosen_activities:
+            self._chosen_activities = [a for a in self.activities
+                                       if a.type.lower() == self.activity_type.lower()]
+        return self._chosen_activities
 
     @property
     def rides(self):
@@ -160,13 +163,20 @@ class Activities(object):
 
 class Strava(object):
     def __init__(self):
+        """
+        Valid activity types are:
+            ride, run, swim, workout, hike, walk, nordicski,
+            alpineski, backcountryski, iceskate, inlineskate, kitesurf, rollerski,
+            windsurf, workout, snowboard, snowshoe
+        """
+
         self.client_id = current_app.config['STRAVA_CLIENT_ID']
         self.client_secret = current_app.config['STRAVA_CLIENT_SECRET']
         self.redirect_uri = url_for('strava.confirm_auth', _external=True)
 
         self.client = StravaClient()
 
-        self.activity_type = 'rides'  # rides or runs
+        self.activity_type = 'ride'  # rides or runs
 
     @property
     def athlete(self):

@@ -39,10 +39,12 @@ def index():
                            mileage_chart=mileage_chart)
 
 
-@route('/runs')
-def runs():
+@route('/<activity_type>')
+def runs(activity_type):
+    if activity_type == 'runs':
+        activity_type = 'run'
     strava = Strava.by_token(session['strava_token'])
-    strava.activity_type = 'runs'
+    strava.activity_type = activity_type
     calendar_info = CalendarInfo.by_activities(strava.activities)
     mileage_chart = AverageMileageChart.by_activities(strava.activities)
 
