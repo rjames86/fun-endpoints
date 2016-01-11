@@ -29,18 +29,11 @@ def before_request():
 
 @route('/')
 def index():
-    strava = Strava.by_token(session['strava_token'])
-    calendar_info = CalendarInfo.by_activities(strava.activities)
-    mileage_chart = AverageMileageChart.by_activities(strava.activities)
-
-    return render_template('strava/index.html',
-                           activities=strava.activities,
-                           calendar_info=calendar_info,
-                           mileage_chart=mileage_chart)
+    return redirect(url_for('strava.activity', activity_type='ride'))
 
 
 @route('/<activity_type>')
-def runs(activity_type):
+def activity(activity_type):
     if activity_type == 'runs':
         activity_type = 'run'
     strava = Strava.by_token(session['strava_token'])

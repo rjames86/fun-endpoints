@@ -39,7 +39,7 @@ class MyAthlete(Athlete):
 
 class ActivityCounter(object):
     def __init__(self, activities):
-        self.chosen_activities = activities.chosen_activity()
+        self.chosen_activities = activities.chosen_activities
         self.activities = activities
         self._counter_dict = None
         # CalendarInfo().month_names.index(month_abbrev)
@@ -49,9 +49,12 @@ class ActivityCounter(object):
         if not self._counter_dict:
             year = defaultdict(dict)
             for chosen_activity in self.chosen_activities:
-                ride_year = year[chosen_activity.start_date_local.year] or defaultdict(int)
-                ride_year[chosen_activity.start_date_local.month] += 1
-                year[chosen_activity.start_date_local.year] = ride_year
+                if chosen_activity.start_date_local.year not in year.keys():
+                    activity_year = defaultdict(int)
+                else:
+                    activity_year = year[chosen_activity.start_date_local.year]
+                activity_year[chosen_activity.start_date_local.month] += 1
+                year[chosen_activity.start_date_local.year] = activity_year
             self._counter_dict = year
         return self._counter_dict
 
@@ -68,14 +71,14 @@ class ActivityCounter(object):
         return to_ret
 
     def by_month_year(self, month, year):
-        return self.activity_count_by_month[year][month]
+        return self.activity_count_by_month[year].get(month, 0)
 
 
 class DistanceCounter(object):
     UNIT = 'miles'
 
     def __init__(self, activities):
-        self.chosen_activities = activities.chosen_activity()
+        self.chosen_activities = activities.chosen_activities
         self.activities = activities
         self.unit_name = getattr(unithelper, self.UNIT).name
 
@@ -107,9 +110,9 @@ class DistanceCounter(object):
     def best_month(self, month):
         all_years = set([chosen_activity.start_date_local.year for chosen_activity in self.chosen_activities])
         return max(
-            [(year, month, self.by_month_year(month, year), self.activities.activity_counts.by_month_year(month, year)) for year in all_years],
-            key=lambda y: y[2]
-            )
+                [(year, month, self.by_month_year(month, year), self.activities.activity_counts.by_month_year(month, year)) for year in all_years],
+                key=lambda y: y[2]
+                )
 
     def _calculate_distance(self, comparator):
         to_ret = 0
@@ -126,16 +129,19 @@ class Activities(object):
     }
 
     def __init__(self, activities, activity_type):
+        self._chosen_activities = None
+
         self.activities = activities
         self.activity_type = activity_type
-        self._chosen_activities = None
+        self.chosen_activities = self.get_chosen_activities()
 
     @property
     def human_activity_type(self):
-        return self.TYPE_TO_NAME.get(self.activity_type, '')
+        return self.TYPE_TO_NAME.get(self.activity_type, self.activity_type.title())
 
-    def chosen_activity(self):
+    def get_chosen_activities(self):
         if not self._chosen_activities:
+            print "CALLING ACTIVITIES"
             self._chosen_activities = [a for a in self.activities
                                        if a.type.lower() == self.activity_type.lower()]
         return self._chosen_activities
