@@ -204,9 +204,9 @@ class Strava(object):
     @property
     def activities(self):
         if not self._activities:
-            current_year = datetime.datetime.now().year
-            after = datetime.datetime(current_year - 2, 12, 25)
-            self._activities = Activities(self.client.get_activities(after=after), self.activity_type)
+            # current_year = datetime.datetime.now().year
+            # after = datetime.datetime(current_year - 2, 12, 25)
+            self._activities = Activities(self.client.get_activities(), self.activity_type)
         return self._activities
 
     @classmethod
