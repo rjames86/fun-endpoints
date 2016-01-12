@@ -139,7 +139,6 @@ class Activities(object):
 
         self.activities = activities
         self.activity_type = activity_type
-        self.chosen_activities = self.get_chosen_activities()
 
     @property
     def available_activity_types(self):
@@ -149,11 +148,12 @@ class Activities(object):
     def human_activity_type(self):
         return self.TYPE_TO_NAME.get(self.activity_type, self.activity_type.title())
 
-    def get_chosen_activities(self):
+    @property
+    def chosen_activities(self):
         if not self._chosen_activities:
-            print "CALLING ACTIVITIES"
             self._chosen_activities = [a for a in self.activities
                                        if a.type.lower() == self.activity_type.lower()]
+
         return self._chosen_activities
 
     @property
@@ -185,7 +185,17 @@ class Strava(object):
 
         self.client = StravaClient()
 
-        self.activity_type = 'ride'  # rides or runs
+        self._activity_type = 'ride'  # rides or runs
+        self._activities = None
+
+    @property
+    def activity_type(self):
+        return self._activity_type
+
+    @activity_type.setter
+    def activity_type(self, value):
+        self._activity_type = value
+        self._activities = None
 
     @property
     def athlete(self):
@@ -193,7 +203,9 @@ class Strava(object):
 
     @property
     def activities(self):
-        return Activities(self.client.get_activities(), self.activity_type)
+        if not self._activities:
+            self._activities = Activities(self.client.get_activities(), self.activity_type)
+        return self._activities
 
     @classmethod
     def authorization_url(cls):
