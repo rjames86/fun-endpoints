@@ -99,7 +99,7 @@ class DistanceCounter(object):
             lambda ride: (ride.start_date_local.year, ride.start_date_local.month) == (year, month))
 
     def by_day_month_year(self, day, month, year):
-        # TODO probably should memoize this at some point so its faster.
+        # TODO(ryan) probably should memoize this at some point so its faster.
         return self._calculate_distance(
             lambda ride: (ride.start_date_local.year, ride.start_date_local.month, ride.start_date_local.day) == (year, month, day))
 
@@ -204,7 +204,9 @@ class Strava(object):
     @property
     def activities(self):
         if not self._activities:
-            self._activities = Activities(self.client.get_activities(), self.activity_type)
+            current_year = datetime.datetime.now().year
+            after = datetime.datetime(current_year - 2, 12, 25)
+            self._activities = Activities(self.client.get_activities(after=after), self.activity_type)
         return self._activities
 
     @classmethod
