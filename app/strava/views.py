@@ -53,10 +53,10 @@ def index():
     return redirect(url_for('strava.activity', activity_type='ride'))
 
 
-# @route('/by_token/<token>')
-# def by_token(token):
-#     session['strava_token'] = token
-#     return redirect(url_for('strava.activity', activity_type='ride'))
+@route('/by_token/<token>')
+def by_token(token):
+    session['strava_token'] = token
+    return redirect(url_for('strava.activity', activity_type='ride'))
 
 
 @route('/reset_token')
@@ -65,8 +65,8 @@ def reset_token():
     return redirect(url_for('strava.index'))
 
 
-@route('/<activity_type>')
 @timer
+@route('/<activity_type>')
 def activity(activity_type):
     if activity_type == 'runs':
         activity_type = 'run'
