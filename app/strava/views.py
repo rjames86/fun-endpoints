@@ -67,7 +67,6 @@ def reset_token():
 
 @timer
 @route('/<activity_type>')
-@cached()
 def activity(activity_type):
     if activity_type == 'runs':
         activity_type = 'run'
