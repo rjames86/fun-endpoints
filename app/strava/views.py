@@ -53,10 +53,10 @@ def index():
     return redirect(url_for('strava.activity', activity_type='ride'))
 
 
-@route('/by_token/<token>')
-def by_token(token):
-    session['strava_token'] = token
-    return redirect(url_for('strava.activity', activity_type='ride'))
+# @route('/by_token/<token>')
+# def by_token(token):
+#     session['strava_token'] = token
+#     return redirect(url_for('strava.activity', activity_type='ride'))
 
 
 @route('/reset_token')
