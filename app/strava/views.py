@@ -11,7 +11,7 @@ from flask import (
     Response
 )
 from . import strava, route, as_json
-from ..lib.decorators import cached
+from app.ib.decorators import cached
 from flask.ext.login import login_user, logout_user, login_required, \
     current_user, redirect
 
@@ -67,6 +67,7 @@ def reset_token():
 
 @timer
 @route('/<activity_type>')
+@cached()
 def activity(activity_type):
     if activity_type == 'runs':
         activity_type = 'run'
