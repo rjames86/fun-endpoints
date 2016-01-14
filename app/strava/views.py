@@ -33,6 +33,7 @@ def timer(method):
 
     return timed
 
+
 @strava.before_app_request
 def before_request():
     if request.endpoint == 'strava.authorize' or request.args.get('code'):
@@ -40,6 +41,8 @@ def before_request():
     if not session.get('strava_token'):
         return redirect(url_for('strava.authorize'))
 
+
+# http://flask.pocoo.org/docs/0.10/patterns/streaming/
 def stream_template(template_name, **context):
     current_app.update_template_context(context)
     t = current_app.jinja_env.get_template(template_name)
@@ -76,6 +79,7 @@ def activity(activity_type):
     mileage_chart = AverageMileageChart.by_activities(strava.activities)
 
     return Response(stream_template('strava/index.html',
+                                    strava=strava,
                                     activities=strava.activities,
                                     calendar_info=calendar_info,
                                     mileage_chart=mileage_chart))
