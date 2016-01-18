@@ -8,7 +8,11 @@
     </tr>
     {% for month in calendar_info.short_month_names %}
     {% if month %}
+    {% if month == calendar_info.short_month_names[calendar_info.today.month] %}
+    <tr class="highlight">
+    {% else %}
     <tr>
+    {% endif %}
     <td>{{ month }}</td>
 
     <td>{{ "%0.2f" | format(activities.activity_distances.by_month_year(loop.index-1, 2016)) }} {{activities.activity_distances.unit_name }}<br>{{ activities.activity_counts.by_month_year(loop.index-1, 2016) }} {{activities.activity_type }}s</td>

@@ -245,9 +245,10 @@ class Strava(object):
         return self
 
 
-
-
 class CalendarInfo(object):
+    today = datetime.date.today()
+    current_week = today.isocalendar()[1] + 1
+
     @property
     def short_month_names(self):
         return list(calendar.month_abbr)
@@ -268,7 +269,7 @@ class CalendarInfo(object):
         cal = calendar.Calendar()
         # Render weeks beginning on Sunday
         # cal.setfirstweekday(6)
-
+        today = datetime.date.today()
         for year in [2016]:
             if year not in calendars:
                 calendars[year] = {}
@@ -292,10 +293,14 @@ class CalendarInfo(object):
                         else:
                             date_info["style_class"] = "adjacent_month_date"
 
+                        if date == today:
+                            date_info["style_class"] += " highlight"
+
                         week_list.append(date_info)
 
                     calendars[year][month].append(week_list)
         return calendars
+
 
 class AverageMileageChart(object):
     @classmethod

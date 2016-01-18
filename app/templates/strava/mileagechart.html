@@ -1,3 +1,9 @@
+{% macro table_info(week_num, average) -%}
+    {% set class = 'highlight' if calendar_info.current_week == week_num else '' %}
+    <td class="{{class}}">{{ week_num }}</td>
+    <td class="{{class}}">{{ "%0.2f" | format(average) }} {{activities.activity_distances.unit_name }}</td>
+{%- endmacro %}
+
 
 <table class="table table-bordered", align="center">
     <tr>
@@ -8,11 +14,10 @@
     </tr>
     {% for (first, second) in mileage_chart.weekly_average %}
     <tr>
-        <td>{{ first[0] }}</td>
-        <td>{{ "%0.2f" | format(first[1]) }} {{activities.activity_distances.unit_name }}</td>
+
+        {{ table_info(first[0], first[1]) }}
         {% if second %}
-        <td>{{ second[0] }}</td>
-        <td>{{ "%0.2f" | format(second[1]) }} {{activities.activity_distances.unit_name }}</td>
+        {{ table_info(second[0], second[1]) }}
         {% endif %}
     </tr>
     {% endfor %}
