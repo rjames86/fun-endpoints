@@ -24,7 +24,6 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    FLASKY_ADMIN = 'rjames86@gmail.com'
     STRAVA_CLIENT_SECRET = 'f807fb8e15a246ff9f25de90bc2e1294fd51ab63'
     STRAVA_CLIENT_ID = 9426
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
