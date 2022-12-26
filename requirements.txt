@@ -26,5 +26,5 @@ stravalib==0.5.0
 urllib3==1.10
 units==0.6
 Werkzeug==0.9.6
-wheel==0.24.0
+wheel==0.38.1
 WTForms==2.0.1
